@@ -3,43 +3,32 @@ import emailjs from 'emailjs-com';
 import { Form, Input, TextArea, Button } from 'semantic-ui-react';
 import Swal from 'sweetalert2';
 import { Container } from 'react-bootstrap';
-import { useRef } from 'react';
+
+
 export default function Contact() {
-
-
     const handleOnSubmit = (e: any) => {
         e.preventDefault();
-        
+
         var service_id = "1";
-        if (process.env.REACT_APP_SERVICE_ID)
-        {
-            service_id = process.env.REACT_APP_SERVICE_ID;
-        }
-        
+        if (process.env.REACT_APP_SERVICE_ID) {service_id = process.env.REACT_APP_SERVICE_ID;}
         var template_id = "1";
         if (process.env.REACT_APP_TEMPLATE_ID)
-        {
-            template_id = process.env.REACT_APP_TEMPLATE_ID;
-        }
-
+        {template_id = process.env.REACT_APP_TEMPLATE_ID;}
         var public_key = process.env.REACT_APP_PUBLIC_KEY;
 
         emailjs.sendForm(service_id,template_id, e.target, public_key)
             .then((result) => {
-                console.log(result.text);
                 Swal.fire({
                     icon: 'success',
                     title: 'Message Sent Successfully'
                 })
             }, (error) => {
-                console.log(error.text);
                 Swal.fire({
                     icon: 'error',
-                    title: 'Ooops, something went wrong',
+                    title: 'Oops, something went wrong',
                     text: error.text,
                 })
             });
-        e.target.reset()
     };
 
     return (
