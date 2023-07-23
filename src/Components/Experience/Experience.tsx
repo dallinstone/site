@@ -68,7 +68,7 @@ export default function Experience() {
                     <Col xs={11} md={5}>
                         <nav>
                             {empItems.map((item, idx) => (
-                                <Fragment key={item.name + "-" + "1" + "-" + idx}>
+                                <Fragment key={`${item.name}-1-${idx}`}>
                                     <Employer
                                         Employer={item}
                                         index={idx}

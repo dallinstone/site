@@ -11,20 +11,6 @@ interface Props {
 
 }
 
-const variants: Variants = {
-    closed: {
-        opacity: 0,
-        x: -300,
-        visibility: "hidden",
-        display: "none"
-    },
-    open: {
-        opacity: 1,
-        x: 0,
-        visibility: "visible",
-    },
-}
-
 const textVariant: Variants = {
     open: { color: '#fff' },
     closed: { color: '#000' },
