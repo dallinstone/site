@@ -22,9 +22,9 @@ export default function Contact() {
             template_id = process.env.REACT_APP_TEMPLATE_ID;
         }
 
-        var user_id = process.env.REACT_APP_PUBLIC_KEY;
+        var public_key = process.env.REACT_APP_PUBLIC_KEY;
 
-        emailjs.sendForm(service_id,template_id, e.target, user_id)
+        emailjs.sendForm(service_id,template_id, e.target, public_key)
             .then((result) => {
                 console.log(result.text);
                 Swal.fire({
