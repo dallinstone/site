@@ -21,6 +21,11 @@ export default function NavBar() {
                 <b>Experience</b>
               </span>
             </Nav.Link>
+            <Nav.Link href="about">
+              <span>
+                <b>About</b>
+              </span>
+            </Nav.Link>
             <Nav.Link href="contact">
               <span>
                 <b>Contact</b>
