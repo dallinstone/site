@@ -1,5 +1,6 @@
 import { RouteObject } from "react-router";
 import HomePage from "../Components/HomePage";
+import Budgenvelopes from "../Components/Budgenvelopes";
 import Experience from "../Components/Experience/Experience";
 import Contact from "../Components/Contact";
 import About from "../Components/About";
@@ -17,6 +18,7 @@ export const routes: RouteObject[] = [
             { path: 'experience', element: <Experience /> },
             { path: 'contact', element: <Contact /> },
             { path: 'about', element: <About /> },
+            { path: 'budgenvelopes', element: <Budgenvelopes />}
         ]
     }
 
