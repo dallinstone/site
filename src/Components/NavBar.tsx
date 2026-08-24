@@ -7,7 +7,7 @@ export default function NavBar() {
 
     <Navbar style={{ backgroundColor: "var(--darkteal)", position: "sticky", top: 0 }} data-bs-theme="dark" expand="lg">
       <Container>
-        <Navbar.Brand>Dallin Stone</Navbar.Brand>
+        <Navbar.Brand>Dallin "Danny" Stone</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ width: "2em" }} />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto white">

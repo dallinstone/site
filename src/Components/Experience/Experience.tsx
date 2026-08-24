@@ -28,17 +28,17 @@ export default function Experience() {
 
     return (
         <>
-            {/* Dallin Stone header comoponent */}
+            {/* Dallin "Danny" Stone header comoponent */}
             <Container fluid style={{ fontFamily: "Lato", alignContent: "left", paddingLeft: 0, paddingBottom: "7em", paddingRight: "3em" }}>
                 <Row style={{ backgroundColor: "var(--maroon)", color: "white" }}>
                     <Col xs={1} />
                     <Col xs={11} md={5} >
                         <h1><br /></h1>
                         <h1 >
-                            Dallin Stone
+                            Dallin "Danny" Stone
                         </h1>
                         <div>
-                            Fort Worth, TX
+                            Richland, WA
                         </div>
                         <h1><br /></h1>
                     </Col>

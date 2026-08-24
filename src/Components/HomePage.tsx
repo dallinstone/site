@@ -34,7 +34,7 @@ export default function HomePage() {
                                     <Row>
                                         <Col>
                                             <h2 style={{ fontFamily: "Lato" }}>
-                                                Dallin Stone
+                                                Dallin "Danny" Stone
                                             </h2>
                                         </Col>
                                     </Row>
