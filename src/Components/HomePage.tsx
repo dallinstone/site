@@ -42,7 +42,7 @@ export default function HomePage() {
                                         <Col xs={1} />
                                         <Col xs={11}>
                                             <h4 style={{ fontFamily: "Lato" }}>
-                                                Experienced web developer
+                                                Senior Software Engineer, specializing in database optimization
                                             </h4>
                                         </Col>
                                     </Row>
@@ -106,7 +106,7 @@ export default function HomePage() {
                                                     <Col xs={7} />
                                                     <Col>
                                                         <motion.div variants={itemVariants}>
-                                                            Mandarin speaker
+                                                            Musician
                                                         </motion.div>
                                                     </Col>
                                                 </Row>
@@ -116,7 +116,7 @@ export default function HomePage() {
                                                     <Col xs={1}></Col>
                                                     <Col>
                                                         <motion.div variants={itemVariants}>
-                                                            Database expert
+                                                            Pathfinder Enjoyer
                                                         </motion.div>
                                                     </Col>
                                                 </Row>

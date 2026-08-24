@@ -1,6 +1,5 @@
 
-import { Container, Nav } from 'react-bootstrap';
-import Navbar from 'react-bootstrap/Navbar';
+import { Container, Nav, Navbar } from 'react-bootstrap';
 
 export default function NavBar() {
   return (
