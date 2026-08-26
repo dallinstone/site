@@ -1,88 +1,44 @@
-import { Variants, motion } from "framer-motion";
-import { Col, Container, Row } from "react-bootstrap";
-import { employmentItem } from "../../Features/Models/EmploymentItem";
-import { Fragment } from "react";
+import { EmploymentItem } from "../../Features/Models/EmploymentItem";
 
 interface Props {
-    Employer: employmentItem,
-    index: number,
-    openItem: number,
-    setOpenItem: Function,
-
+  employer: EmploymentItem;
+  index: number;
+  isOpen: boolean;
+  onToggle: () => void;
 }
 
-const textVariant: Variants = {
-    open: { color: '#fff' },
-    closed: { color: '#000' },
-}
+export default function Employer({ employer, index, isOpen, onToggle }: Props) {
+  const panelId = `experience-panel-${index}`;
+  const buttonId = `experience-button-${index}`;
 
-
-export default function Employer({ Employer, index, openItem, setOpenItem, }: Props) {
-
-    function clickEvent() {
-        if (openItem === index) {
-            setOpenItem(-1);
-        }
-        else {
-            setOpenItem(index);
-        }
-    }
-
-    return (
-        <Fragment key={Employer.name + "-" + index}>
-            <motion.button
-
-                name={Employer.name}
-                onClick={clickEvent}
-                whileTap={{ scale: 0.97 }}
-                animate={openItem === index ? { backgroundColor: "var(--lightmaroon)" } : { backgroundColor: "var(--greyblue)" }}
-            >
-                <Container>
-                    <Row>
-                        <Col xs={10} sm={11}>
-                            <motion.div
-                                animate={openItem === index ? "open" : "closed"}
-                                variants={textVariant}
-                            >
-                                <Container>
-                                    <Row>
-                                        <h3>
-                                            {Employer.name}
-                                        </h3>
-                                    </Row>
-                                    <Row>
-                                        <h5 key={Employer.name + "10"}>
-                                            {Employer.title}
-                                        </h5>
-                                    </Row>
-                                    <Row key={Employer.name + "11"}>
-                                        <span key={Employer.name + "12"}>
-                                            {Employer.dates}
-                                        </span>
-                                    </Row>
-                                </Container>
-                            </motion.div>
-                        </Col>
-                        <Col xs={1} key={Employer.name + "13"}>
-                            <Container key={Employer.name + "14"}>
-                                <Row key={Employer.name + "15"}>&nbsp;</Row>
-                                <Row key={Employer.name + "16"}>
-                                    <motion.div className="arrow" style={{ transformOrigin: "75% 50%" }}
-                                        animate={{ rotate: openItem === index ? 180 : 0 }}
-                                        transition={{ duration: 0.3 }}
-                                        key={Employer.name + "17"}>
-                                        <svg width="25" height="25" viewBox="0 0 20 20" key={Employer.name + "18"}>
-                                            <path d="M9 0 L 9 20 L 0 10"
-                                                key={Employer.name + "19"} />
-                                        </svg>
-                                    </motion.div>
-                                </Row>
-                                <Row key={Employer.name + "20"}>&nbsp;</Row>
-                            </Container>
-                        </Col>
-                    </Row>
-                </Container>
-            </motion.button>
-        </Fragment>
-    )
+  return (
+    <article className={`experience-card${isOpen ? " experience-card--open" : ""}`}>
+      <button
+        id={buttonId}
+        className="experience-summary"
+        type="button"
+        aria-expanded={isOpen}
+        aria-controls={panelId}
+        onClick={onToggle}
+      >
+        <span className="experience-summary__text">
+          <strong>{employer.name}</strong>
+          <span>{employer.title}</span>
+          <span>{employer.dates}</span>
+        </span>
+        <span className="experience-summary__icon" aria-hidden="true">{isOpen ? "−" : "+"}</span>
+      </button>
+      <section
+        id={panelId}
+        className="experience-panel"
+        aria-labelledby={buttonId}
+        hidden={!isOpen}
+      >
+        <p>{employer.summary}</p>
+        <ul>
+          {employer.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}
+        </ul>
+      </section>
+    </article>
+  );
 }

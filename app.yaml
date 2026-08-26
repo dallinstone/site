@@ -1,19 +1,86 @@
 runtime: nodejs24
 
 handlers:
-
-  # Serve all static files with url ending with a file extension
+  - url: /assets/(.*)
+    static_files: dist/assets/\1
+    upload: dist/assets/(.*)
+    secure: always
+    expiration: 365d
+    http_headers:
+      Cache-Control: public, max-age=31536000, immutable
+      X-Content-Type-Options: nosniff
+      Referrer-Policy: strict-origin-when-cross-origin
 
   - url: /(.*\..+)$
+    static_files: dist/\1
+    upload: dist/(.*\..+)$
+    secure: always
+    expiration: 7d
+    http_headers:
+      X-Content-Type-Options: nosniff
+      Referrer-Policy: strict-origin-when-cross-origin
 
-    static_files: build/\1
+  - url: /experience/?
+    static_files: dist/experience/index.html
+    upload: dist/experience/index.html
+    secure: always
+    expiration: 0s
+    http_headers:
+      Cache-Control: no-cache
+      Content-Security-Policy: "default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://api.emailjs.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+      Permissions-Policy: camera=(), microphone=(), geolocation=()
+      Referrer-Policy: strict-origin-when-cross-origin
+      Strict-Transport-Security: max-age=31536000; includeSubDomains
+      X-Content-Type-Options: nosniff
 
-    upload: build/(.*\..+)$
+  - url: /projects/?
+    static_files: dist/projects/index.html
+    upload: dist/projects/index.html
+    secure: always
+    expiration: 0s
+    http_headers:
+      Cache-Control: no-cache
+      Content-Security-Policy: "default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://api.emailjs.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+      Permissions-Policy: camera=(), microphone=(), geolocation=()
+      Referrer-Policy: strict-origin-when-cross-origin
+      Strict-Transport-Security: max-age=31536000; includeSubDomains
+      X-Content-Type-Options: nosniff
 
-  # Catch all handler to index.html
+  - url: /about/?
+    static_files: dist/about/index.html
+    upload: dist/about/index.html
+    secure: always
+    expiration: 0s
+    http_headers:
+      Cache-Control: no-cache
+      Content-Security-Policy: "default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://api.emailjs.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+      Permissions-Policy: camera=(), microphone=(), geolocation=()
+      Referrer-Policy: strict-origin-when-cross-origin
+      Strict-Transport-Security: max-age=31536000; includeSubDomains
+      X-Content-Type-Options: nosniff
+
+  - url: /contact/?
+    static_files: dist/contact/index.html
+    upload: dist/contact/index.html
+    secure: always
+    expiration: 0s
+    http_headers:
+      Cache-Control: no-cache
+      Content-Security-Policy: "default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://api.emailjs.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+      Permissions-Policy: camera=(), microphone=(), geolocation=()
+      Referrer-Policy: strict-origin-when-cross-origin
+      Strict-Transport-Security: max-age=31536000; includeSubDomains
+      X-Content-Type-Options: nosniff
 
   - url: /.*
-
-    static_files: build/index.html
-
-    upload: build/index.html
+    static_files: dist/index.html
+    upload: dist/index.html
+    secure: always
+    expiration: 0s
+    http_headers:
+      Cache-Control: no-cache
+      Content-Security-Policy: "default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://api.emailjs.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+      Permissions-Policy: camera=(), microphone=(), geolocation=()
+      Referrer-Policy: strict-origin-when-cross-origin
+      Strict-Transport-Security: max-age=31536000; includeSubDomains
+      X-Content-Type-Options: nosniff

@@ -1,123 +1,102 @@
-import { Variants, motion } from "framer-motion";
-import { Fragment, useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
-import Employer from "./Employer";
-import Education from "./Education";
+import { useState } from "react";
 import { eduItems } from "../../Features/Collections/EduItems";
 import { empItems } from "../../Features/Collections/EmploymentItems";
-import { sanitize } from "dompurify";
+import PageMeta from "../PageMeta";
+import Employer from "./Employer";
 
-const variants: Variants = {
-    closed: {
-        opacity: 0,
-        x: -300,
-        visibility: "hidden",
-        display: "none",
-    },
-    open: {
-        opacity: 1,
-        x: 0,
-        visibility: "visible",
-    },
-}
-
-
+const skillGroups = [
+  { title: "Application engineering", skills: ["C#", ".NET", "ASP.NET", "REST APIs", "React", "Angular", "TypeScript", "Identity & SSO"] },
+  { title: "SQL Server", skills: ["Stored procedure design", "Index design", "Trigger, function, and view creation"] },
+  { title: "Data access", skills: ["Dapper", "Entity Framework Core"]},
+  { title: "Azure & integrations", skills: ["Microsoft Azure", "Azure Functions", "Azure Service Bus", "Cloud migrations", "Azure Data Factory", "Webhooks"] },
+  { title: "Quality & delivery", skills: ["xUnit", "Moq", "NSubstitute", "Playwright", "SDLC"] },
+  { title: "Leadership", skills: ["Technical mentoring", "Interviewing", "Hiring", "One-on-ones", "Stakeholder communication"]}
+];
 
 export default function Experience() {
-    const [openItem, setOpenItem] = useState(-1);
+  const [openItem, setOpenItem] = useState<number | null>(0);
 
-    return (
-        <>
-            {/* Dallin "Danny" Stone header comoponent */}
-            <Container fluid style={{ fontFamily: "Lato", alignContent: "left", paddingLeft: 0, paddingBottom: "7em", paddingRight: "3em" }}>
-                <Row style={{ backgroundColor: "var(--maroon)", color: "white" }}>
-                    <Col xs={1} />
-                    <Col xs={11} md={5} >
-                        <h1><br /></h1>
-                        <h1 >
-                            Dallin "Danny" Stone
-                        </h1>
-                        <div>
-                            Richland, WA
-                        </div>
-                        <h1><br /></h1>
-                    </Col>
-                    <Col xs={12} md={6} style={{ backgroundColor: "white" }}>
-                        <Row>
-                            <br />
-                        </Row>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <br />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs={1} />
-                    <Col xs={11} md={5}>
-                        <h2>
-                            Work experience
-                        </h2>
-                        <hr />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs={1} />
-                    {/* colored work item component */}
-                    <Col xs={11} md={5}>
-                        <nav>
-                            {empItems.map((item, idx) => (
-                                <Fragment key={`${item.name}-1-${idx}`}>
-                                    <Employer
-                                        Employer={item}
-                                        index={idx}
-                                        openItem={openItem}
-                                        setOpenItem={setOpenItem}
-                                    />
-                                </Fragment>
-                            ))}
-                        </nav>
-                    </Col>
-                    {/* experience items list  */}
-                    <Col xs={12} md={6}>
-                        {empItems.map((item, idx) => (
-                            <motion.div
-                                variants={variants}
-                                animate={openItem === idx ? "open" : "closed"}
-                                key={item.name}
-                            >
-                                <ul>
-                                    {item.exp_items.map((expitem, itemdx) => (
-                                        <li key={item.name + "-" + itemdx} dangerouslySetInnerHTML={{ __html: sanitize(expitem) }}></li>
-                                    ))}
-                                </ul>
-                            </motion.div>
-                        ))}
-                    </Col>
-                </Row >
-                <Row>
-                    <Col>
-                        <br />
-                    </Col>
-                </Row>
-                {/* education items */}
-                <Row>
-                    <Col xs={1}></Col>
-                    <Col xs={11} md={5}>
-                        <h2>
-                            Education
-                        </h2>
-                        <hr />
-                    </Col>
-                </Row>
-                {eduItems.map((item, index) => (
-                    <div key={item.school + "-" + index}>
-                        <Education edu={item} />
-                    </div>
-                ))}
+  return (
+    <div className="resume-page page-shell">
+      <PageMeta route="/experience" />
 
-            </Container >
-        </>
-    )
+      <header className="resume-hero">
+        <div>
+          <p className="eyebrow">Professional résumé</p>
+          <h1>Dallin “Danny” Stone</h1>
+          <p className="resume-subtitle">Senior Software Engineer · C#/.NET · React/Angular · TypeScript · SQL Server · Azure</p>
+        </div>
+        <div className="resume-actions">
+          <a className="button button--primary resume-download" href="/danny-stone-resume.pdf" download>
+            Download résumé (PDF)
+          </a>
+          <button className="button button--secondary print-button" type="button" onClick={() => window.print()}>
+            Print page
+          </button>
+        </div>
+      </header>
+
+      <section className="resume-summary" aria-labelledby="summary-title">
+        <h2 id="summary-title">Engineering profile</h2>
+        <p>
+          Senior software engineer working at the intersection of application architecture,
+          SQL Server data access, and distributed systems. I design efficient stored
+          procedures, indexes, queries, and application data paths; build Azure integrations
+          with services including Azure Functions and Service Bus; and modernize C#/.NET
+          business systems. My focus is software engineering around complex applications
+          and protecting PII data.
+        </p>
+      </section>
+
+      <section className="skills-section" aria-labelledby="skills-title">
+        <div className="section-heading">
+          <p className="eyebrow">Core capabilities</p>
+          <h2 id="skills-title">Technical toolkit</h2>
+        </div>
+        <div className="skills-grid">
+          {skillGroups.map((group) => (
+            <article key={group.title}>
+              <h3>{group.title}</h3>
+              <ul>{group.skills.map((skill) => <li key={skill}>{skill}</li>)}</ul>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="work-section" aria-labelledby="work-title">
+        <div className="section-heading">
+          <p className="eyebrow">Career history</p>
+          <h2 id="work-title">Work experience</h2>
+        </div>
+        <div className="experience-list">
+          {empItems.map((employer, index) => (
+            <Employer
+              key={employer.name}
+              employer={employer}
+              index={index}
+              isOpen={openItem === index}
+              onToggle={() => setOpenItem(openItem === index ? null : index)}
+            />
+          ))}
+        </div>
+      </section>
+
+      <section className="education-section" aria-labelledby="education-title">
+        <div className="section-heading">
+          <p className="eyebrow">Academic foundation</p>
+          <h2 id="education-title">Education</h2>
+        </div>
+        <div className="education-grid">
+          {eduItems.map((education) => (
+            <article key={education.school}>
+              <p className="education-years">{education.years}</p>
+              <h3>{education.school}</h3>
+              <p>{education.major}</p>
+              {education.minor && <p className="muted">{education.minor}</p>}
+            </article>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
 }
