@@ -21,7 +21,7 @@ export default function NavBar() {
       <div className="nav-shell">
         <NavLink className="brand" to="/" aria-label="Danny Stone, home">
           <span className="brand__mark" aria-hidden="true">DS</span>
-          <span>Danny Stone</span>
+          <span className="brand__name">Danny Stone</span>
         </NavLink>
 
         <button

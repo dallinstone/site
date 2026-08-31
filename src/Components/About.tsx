@@ -9,8 +9,8 @@ const principles = [
   },
   {
     number: "02",
-    title: "Make progress legible",
-    text: "Good engineering includes clear communication, reliable delivery, and building trust with the customer.",
+    title: "Translate the need",
+    text: "I work with customers and product owners to define what the software needs to do, then translate between business priorities and developer-level decisions so everyone can move forward.",
   },
   {
     number: "03",
@@ -19,10 +19,10 @@ const principles = [
   },
 ];
 
-const stack = [
-  ["Built with", "React, TypeScript, and Vite"],
-  ["Designed for", "Fast, responsive, accessible reading"],
-  ["Hosted on", "Google App Engine"],
+const problems = [
+  ["Slow, data-heavy workflows", "Trace performance from the user experience through the application layers and into SQL Server, then improve the parts that matter."],
+  ["Unclear or competing requirements", "Ask the questions that uncover the real need, align the people involved, and turn ambiguity into actionable technical direction."],
+  ["Legacy systems that need to evolve", "Modernize deliberately so teams can improve reliability and maintainability without losing the business knowledge already built into the software."],
 ];
 
 export default function About() {
@@ -64,23 +64,20 @@ export default function About() {
           <h2 id="personal-title">Three dogs, plenty of hobbies.</h2>
         </div>
         <p>
-          Outside work, I’m a musician (I sing in the choir and play the piano and organ at
-          church), avid video gamer, Lego collector, Pathfinder enthusiast (happy to tell you
-          about my latest character), book reader (I love fantasy and especially Brandon
-          Sanderson), and unapologetic TV binge-watcher (Parks and Rec, New Girl, and
-          Superstore are some of my favorites). I share life with three dogs (Tucker, Rocco,
-          and Benny) and am almost always working on something new.
+          Outside work, I’m a musician, Pathfinder player, Lego collector, fantasy reader,
+          video gamer, and unapologetic sitcom re-watcher. Life with Tucker, Rocco, and Benny
+          keeps things lively, and I’m almost always learning or building something new.
         </p>
       </section>
 
-      <section className="colophon-section" aria-labelledby="colophon-title">
+      <section className="problem-section" aria-labelledby="problem-title">
         <div className="section-heading">
-          <p className="eyebrow">Colophon</p>
-          <h2 id="colophon-title">How this site is built</h2>
-          <p>This site intentionally keeps the stack small, fast, and maintainable.</p>
+          <p className="eyebrow">Where I add value</p>
+          <h2 id="problem-title">Problems I’m especially good at solving</h2>
+          <p>The common thread is turning complexity into a system that people can understand, trust, and improve.</p>
         </div>
-        <dl className="stack-list">
-          {stack.map(([term, detail]) => (
+        <dl className="problem-list">
+          {problems.map(([term, detail]) => (
             <div key={term}>
               <dt>{term}</dt>
               <dd>{detail}</dd>
@@ -90,8 +87,8 @@ export default function About() {
       </section>
 
       <section className="page-cta">
-        <h2>Want the professional version?</h2>
-        <p>My résumé covers the systems, integrations, and teams I’ve worked with.</p>
+        <h2>See how that shows up in practice.</h2>
+        <p>My résumé covers the systems, integrations, customers, and teams behind this work.</p>
         <Link className="button button--primary" to="/experience">View experience</Link>
       </section>
     </div>

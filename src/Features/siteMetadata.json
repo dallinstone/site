@@ -1,11 +1,11 @@
 {
   "/": {
     "title": "Danny Stone",
-    "description": "Senior software engineer focused on efficient SQL Server stored procedures, indexes, and data access for business applications, plus Azure integrations and modernization."
+    "description": "Danny Stone is a senior software engineer who translates customer and product needs into clear technical requirements, efficient database systems, and reliable business software."
   },
   "/experience": {
     "title": "Experience",
-    "description": "Résumé for Dallin “Danny” Stone, a senior software engineer focused on modern C#/.NET business applications, efficient SQL Server data access, and Azure integrations."
+    "description": "Résumé for Dallin “Danny” Stone: database engineering, requirements discovery, customer communication, C#/.NET business applications, and Azure integrations."
   },
   "/projects": {
     "title": "Projects",
@@ -13,11 +13,11 @@
   },
   "/about": {
     "title": "About",
-    "description": "Learn more about Danny Stone’s approach to software engineering, professional values, interests, and the technology behind this website."
+    "description": "Learn how Danny Stone connects database engineering, customer communication, and technical translation to make complex business software clearer and more reliable."
   },
   "/contact": {
     "title": "Contact",
-    "description": "Contact Danny Stone about software engineering, application performance, integrations, or professional opportunities."
+    "description": "Contact Danny Stone about database engineering, application performance, requirements discovery, technical translation, integrations, or professional opportunities."
   },
   "__notFound": {
     "title": "Page not found",

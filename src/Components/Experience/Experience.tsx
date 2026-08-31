@@ -4,13 +4,30 @@ import { empItems } from "../../Features/Collections/EmploymentItems";
 import PageMeta from "../PageMeta";
 import Employer from "./Employer";
 
-const skillGroups = [
-  { title: "Application engineering", skills: ["C#", ".NET", "ASP.NET", "REST APIs", "React", "Angular", "TypeScript", "Identity & SSO"] },
-  { title: "SQL Server", skills: ["Stored procedure design", "Index design", "Trigger, function, and view creation"] },
-  { title: "Data access", skills: ["Dapper", "Entity Framework Core"]},
+const coreCapabilities = [
+  {
+    number: "01",
+    title: "Database engineering",
+    text: "Designing efficient data paths and tracing performance from the application into SQL Server.",
+    skills: ["SQL Server", "Stored procedures", "Index & query tuning", "Dapper", "Entity Framework Core", "Views, functions & triggers"],
+  },
+  {
+    number: "02",
+    title: "Requirements & communication",
+    text: "Creating shared understanding between the people who use, define, and build the software.",
+    skills: ["Requirements discovery", "Customer communication", "Product owner partnership", "Technical translation", "Stakeholder communication", "Technical mentoring"],
+  },
+  {
+    number: "03",
+    title: "Application systems",
+    text: "Building and modernizing reliable business applications across frontend, API, identity, and service layers.",
+    skills: ["C#", ".NET", "ASP.NET", "REST APIs", "React", "Angular", "TypeScript", "Identity & SSO"],
+  },
+];
+
+const supportingGroups = [
   { title: "Azure & integrations", skills: ["Microsoft Azure", "Azure Functions", "Azure Service Bus", "Cloud migrations", "Azure Data Factory", "Webhooks"] },
   { title: "Quality & delivery", skills: ["xUnit", "Moq", "NSubstitute", "Playwright", "SDLC"] },
-  { title: "Leadership", skills: ["Technical mentoring", "Interviewing", "Hiring", "One-on-ones", "Stakeholder communication"]}
 ];
 
 export default function Experience() {
@@ -38,28 +55,41 @@ export default function Experience() {
 
       <section className="resume-summary" aria-labelledby="summary-title">
         <h2 id="summary-title">Engineering profile</h2>
-        <p>
-          Senior software engineer working at the intersection of application architecture,
-          SQL Server data access, and distributed systems. I design efficient stored
-          procedures, indexes, queries, and application data paths; build Azure integrations
-          with services including Azure Functions and Service Bus; and modernize C#/.NET
-          business systems. My focus is software engineering around complex applications
-          and protecting PII data.
-        </p>
+        <div className="resume-summary__content">
+          <p>I help teams make good decisions about complex, data-heavy business software.</p>
+          <ul className="profile-highlights">
+            <li><strong>Translate the need.</strong> Partner with customers and product owners to clarify business goals and give development teams useful technical direction.</li>
+            <li><strong>Engineer the data path.</strong> Design efficient SQL Server procedures, indexes, queries, and application access patterns.</li>
+            <li><strong>Deliver reliable systems.</strong> Build and modernize C#/.NET applications and Azure integrations while protecting sensitive data.</li>
+          </ul>
+        </div>
       </section>
 
       <section className="skills-section" aria-labelledby="skills-title">
         <div className="section-heading">
           <p className="eyebrow">Core capabilities</p>
-          <h2 id="skills-title">Technical toolkit</h2>
+          <h2 id="skills-title">The work I’m known for</h2>
         </div>
-        <div className="skills-grid">
-          {skillGroups.map((group) => (
+        <div className="resume-capabilities-grid">
+          {coreCapabilities.map((group) => (
             <article key={group.title}>
+              <span>{group.number}</span>
               <h3>{group.title}</h3>
+              <p>{group.text}</p>
               <ul>{group.skills.map((skill) => <li key={skill}>{skill}</li>)}</ul>
             </article>
           ))}
+        </div>
+        <div className="supporting-toolkit">
+          <h3>Supporting toolkit</h3>
+          <div className="supporting-toolkit__grid">
+            {supportingGroups.map((group) => (
+              <article key={group.title}>
+                <h4>{group.title}</h4>
+                <ul>{group.skills.map((skill) => <li key={skill}>{skill}</li>)}</ul>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 

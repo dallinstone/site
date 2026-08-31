@@ -1,7 +1,7 @@
 {
   "short_name": "Danny Stone",
   "name": "Danny Stone — Senior Software Engineer",
-  "description": "Professional portfolio and résumé for Dallin “Danny” Stone.",
+  "description": "Database engineering, clear communication, and technical translation by senior software engineer Dallin “Danny” Stone.",
   "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }],
   "start_url": "/",
   "display": "standalone",

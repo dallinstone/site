@@ -4,14 +4,6 @@ import photoSmall from "../public/profile-640.jpeg";
 import PageMeta from "./PageMeta";
 import ProjectVisual from "./ProjectVisual";
 
-const strengths = [
-  "Efficient SQL Server",
-  "C# & .NET",
-  "Azure integrations",
-  "React applications",
-  "Technical leadership",
-];
-
 const featuredProjects = [
   {
     name: "PF2e Equipment Tracker",
@@ -27,27 +19,42 @@ const featuredProjects = [
   },
 ];
 
+const coreStrengths = [
+  {
+    number: "01",
+    title: "Database engineering",
+    text: "I design and tune SQL Server stored procedures, indexes, queries, and application data paths for fast, reliable business workflows.",
+  },
+  {
+    number: "02",
+    title: "Clear communication",
+    text: "I help customers, product owners, stakeholders, and developers build shared understanding and make confident decisions.",
+  },
+  {
+    number: "03",
+    title: "Technical translation",
+    text: "I turn business goals and customer pain points into scoped requirements, technical direction, and practical next steps for engineering teams.",
+  },
+];
+
 export default function HomePage() {
   return (
     <article className="home-page">
       <PageMeta route="/" />
       <section className="hero" aria-labelledby="hero-title">
         <div className="hero__content">
-          <p className="eyebrow">Senior Software Engineer · Database &amp; Systems Performance for Business Applications</p>
-          <h1 id="hero-title">I make complex software faster, clearer, and easier to trust.</h1>
+          <h1 className="hero__name" id="hero-title">Danny Stone</h1>
+          <p className="eyebrow">Senior Software Engineer for Data-Heavy Business Systems</p>
+          <p className="hero__statement">I turn business needs into fast, reliable software.</p>
           <p className="hero__lede">
-            I’m Dallin “Danny” Stone, a C#/.NET engineer who builds business
-            applications and efficient SQL Server data access—designing stored
-            procedures, indexes, and queries that keep application workflows fast
-            and reliable—alongside Azure integrations and thoughtful modernization.
+            I translate customer and product needs into clear technical requirements,
+            then build dependable C#/.NET applications, efficient SQL Server data access,
+            and Azure integrations that keep business workflows moving.
           </p>
           <div className="hero__actions" aria-label="Primary actions">
             <Link className="button button--primary" to="/experience">View experience</Link>
             <Link className="button button--secondary" to="/contact">Start a conversation</Link>
           </div>
-          <ul className="strength-list" aria-label="Areas of expertise">
-            {strengths.map((strength) => <li key={strength}>{strength}</li>)}
-          </ul>
         </div>
 
         <figure className="portrait-card">
@@ -60,11 +67,23 @@ export default function HomePage() {
             width="1200"
             height="1460"
           />
-          <figcaption>
-            <span>Engineer by trade</span>
-            <span>Problem solver by nature</span>
-          </figcaption>
         </figure>
+      </section>
+
+      <section className="home-strengths" aria-labelledby="home-strengths-title">
+        <div className="home-strengths__heading">
+          <p className="eyebrow">What I bring</p>
+          <h2 id="home-strengths-title">Three strengths for complex software.</h2>
+        </div>
+        <div className="home-strengths__grid">
+          {coreStrengths.map((strength) => (
+            <article key={strength.number}>
+              <span>{strength.number}</span>
+              <h3>{strength.title}</h3>
+              <p>{strength.text}</p>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section className="home-projects" aria-labelledby="home-projects-title">
