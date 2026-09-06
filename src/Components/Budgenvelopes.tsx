@@ -1,21 +1,19 @@
+import PageMeta from "./PageMeta";
+
 export default function Budgenvelopes() {
-
-return (
-<div>
-
-Privacy Policy
-
-BudgEnvelopes and its developer take your privacy very seriously. 
-
-Beyond the information Apple provides to developers that you can decide to provide, 
-It uses no third-party analytics or advertising frameworks. 
-
-BudgEnvelopes logs no information on you and has no interest in doing such.
-
-BudgEnvelopes does not collect, transmit, distribute or sell your data.
-
-Your privacy is paramount.
-
-</div>
-)
+  return (
+    <article className="privacy-page page-shell">
+      <PageMeta route="/budgenvelopes" />
+      <header className="page-intro">
+        <p className="eyebrow">BudgEnvelopes</p>
+        <h1>Privacy, plainly stated.</h1>
+      </header>
+      <div className="privacy-copy">
+        <p>BudgEnvelopes and its developer take your privacy very seriously.</p>
+        <p>Beyond information Apple provides to developers that you choose to share, BudgEnvelopes uses no third-party analytics or advertising frameworks.</p>
+        <p>BudgEnvelopes logs no information about you and does not collect, transmit, distribute, or sell your data.</p>
+        <p><strong>Your privacy is paramount.</strong></p>
+      </div>
+    </article>
+  );
 }

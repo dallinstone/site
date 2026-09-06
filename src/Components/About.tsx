@@ -5,7 +5,7 @@ const principles = [
   {
     number: "01",
     title: "Understand the system",
-    text: "I excel at tracing problems from the user experience through the application layers and into the data to quickly resolve customer issues.",
+    text: "I trace problems from the user experience through the application layers and into the data, so the fix addresses the real cause rather than the nearest symptom.",
   },
   {
     number: "02",
@@ -15,7 +15,7 @@ const principles = [
   {
     number: "03",
     title: "Leave it healthier",
-    text: "A feature should solve today’s problem without quietly creating tomorrow’s. I value durable design and simple approaches to keep the software scalable and reliable.",
+    text: "A feature should solve today’s problem without quietly creating tomorrow’s. I prefer simple, durable designs that keep software reliable and easier to change.",
   },
 ];
 
@@ -31,21 +31,20 @@ export default function About() {
       <PageMeta route="/about" />
 
       <header className="page-intro about-intro">
-        <p className="eyebrow">About me</p>
-        <h1>Software is hard. I make it clearer.</h1>
+        <p className="eyebrow">About</p>
+        <h1>I’m the engineer people call when the problem crosses boundaries.</h1>
         <p>
-          I’m Danny, a senior software engineer with a background that spans application
-          development, data analytics, accounting, technical support, and people leadership.
-          That mix helps me connect implementation details to the people and business
-          processes a system ultimately serves. I’m especially good at uncovering what
-          customers need to make their businesses easier to run.
+          I’m Danny. My background includes application development, data analytics,
+          accounting, technical support, and people leadership. It’s an odd mix on paper,
+          but a useful one in practice: I can talk with a customer, trace the code, read the
+          query plan, and keep sight of the business process underneath all of it.
         </p>
       </header>
 
       <section className="principles-section" aria-labelledby="principles-title">
         <div className="section-heading">
-          <p className="eyebrow">How I work</p>
-          <h2 id="principles-title">A practical engineering philosophy</h2>
+          <p className="eyebrow">How I tend to work</p>
+          <h2 id="principles-title">A few opinions, earned the slow way.</h2>
         </div>
         <div className="principles-grid">
           {principles.map((principle) => (
@@ -60,11 +59,11 @@ export default function About() {
 
       <section className="personal-section" aria-labelledby="personal-title">
         <div>
-          <p className="eyebrow">Off the clock</p>
-          <h2 id="personal-title">Three dogs, plenty of hobbies.</h2>
+          <p className="eyebrow">Away from the keyboard</p>
+          <h2 id="personal-title">I am very capable of having too many hobbies.</h2>
         </div>
         <p>
-          Outside work, I’m a musician, Pathfinder player, Lego collector, fantasy reader,
+          Outside work, I’m a musician, Pathfinder player, LEGO collector, fantasy reader,
           video gamer, and unapologetic sitcom re-watcher. Life with Tucker, Rocco, and Benny
           keeps things lively, and I’m almost always learning or building something new.
         </p>
@@ -72,9 +71,9 @@ export default function About() {
 
       <section className="problem-section" aria-labelledby="problem-title">
         <div className="section-heading">
-          <p className="eyebrow">Where I add value</p>
-          <h2 id="problem-title">Problems I’m especially good at solving</h2>
-          <p>The common thread is turning complexity into a system that people can understand, trust, and improve.</p>
+          <p className="eyebrow">Good problems to send my way</p>
+          <h2 id="problem-title">The knotty, cross-layer ones.</h2>
+          <p>I’m most useful when the answer involves both the software and the people using it.</p>
         </div>
         <dl className="problem-list">
           {problems.map(([term, detail]) => (
@@ -87,9 +86,9 @@ export default function About() {
       </section>
 
       <section className="page-cta">
-        <h2>See how that shows up in practice.</h2>
-        <p>My résumé covers the systems, integrations, customers, and teams behind this work.</p>
-        <Link className="button button--primary" to="/experience">View experience</Link>
+        <h2>Want the chronological version?</h2>
+        <p>My résumé has the systems, integrations, teams, and dates.</p>
+        <Link className="button button--primary" to="/experience">Go to work history</Link>
       </section>
     </div>
   );

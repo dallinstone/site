@@ -1,19 +1,13 @@
-import { lazy, ReactElement, Suspense } from "react";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import App from "../App";
+import About from "../Components/About";
 import Budgenvelopes from "../Components/Budgenvelopes";
+import Contact from "../Components/Contact";
+import Experience from "../Components/Experience/Experience";
 import HomePage from "../Components/HomePage";
+import NotFound from "../Components/NotFound";
+import Projects from "../Components/Projects";
 import RouteError from "../Components/RouteError";
-
-const About = lazy(() => import("../Components/About"));
-const Contact = lazy(() => import("../Components/Contact"));
-const Experience = lazy(() => import("../Components/Experience/Experience"));
-const NotFound = lazy(() => import("../Components/NotFound"));
-const Projects = lazy(() => import("../Components/Projects"));
-
-function deferred(element: ReactElement) {
-  return <Suspense fallback={<p className="page-loading" role="status">Loading page…</p>}>{element}</Suspense>;
-}
 
 export const router = createBrowserRouter([
   {
@@ -23,12 +17,12 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       { path: "home", element: <Navigate to="/" replace /> },
-      { path: "experience", element: deferred(<Experience />) },
-      { path: "projects", element: deferred(<Projects />) },
-      { path: "contact", element: deferred(<Contact />) },
-      { path: "about", element: deferred(<About />) },
+      { path: "experience", element: <Experience /> },
+      { path: "projects", element: <Projects /> },
+      { path: "contact", element: <Contact /> },
+      { path: "about", element: <About /> },
       { path: "budgenvelopes", element: <Budgenvelopes /> },
-      { path: "*", element: deferred(<NotFound />) },
+      { path: "*", element: <NotFound /> },
     ],
   },
 ]);

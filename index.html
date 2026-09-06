@@ -3,8 +3,26 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#143f46" />
-    <meta name="description" content="Dallin “Danny” Stone is a senior software engineer who translates customer and product needs into clear technical requirements, efficient database systems, and reliable business software." />
+    <meta name="theme-color" content="#19317c" />
+    <script>
+      (() => {
+        try {
+          const savedTheme = window.localStorage.getItem("danny-stone-theme");
+          const theme = savedTheme === "dark" || savedTheme === "light"
+            ? savedTheme
+            : "dark";
+          document.documentElement.dataset.theme = theme;
+          document.documentElement.style.colorScheme = theme;
+          document.querySelector('meta[name="theme-color"]')?.setAttribute(
+            "content",
+            theme === "dark" ? "#101522" : "#19317c",
+          );
+        } catch {
+          document.documentElement.dataset.theme = "dark";
+        }
+      })();
+    </script>
+    <meta name="description" content="Danny Stone is a senior software engineer working across .NET applications, SQL Server, React, Azure, and the people who use the software." />
     <meta name="author" content="Dallin “Danny” Stone" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://dallinstone.com/" />
@@ -12,15 +30,15 @@
     <link rel="manifest" href="/manifest.json" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Danny Stone · Senior Software Engineer" />
-    <meta property="og:description" content="Database engineering, clear communication, and technical translation for complex business software." />
+    <meta property="og:description" content="I build the business software people rely on." />
     <meta property="og:url" content="https://dallinstone.com/" />
     <meta property="og:image" content="https://dallinstone.com/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Dallin “Danny” Stone — Databases, Clear Communication, and Technical Translation" />
+    <meta property="og:image:alt" content="Danny Stone — Senior Software Engineer" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Danny Stone · Senior Software Engineer" />
-    <meta name="twitter:description" content="Database engineering, clear communication, and technical translation for complex business software." />
+    <meta name="twitter:description" content="I build the business software people rely on." />
     <meta name="twitter:image" content="https://dallinstone.com/og.png" />
     <script type="application/ld+json">
       {

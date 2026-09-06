@@ -39,7 +39,7 @@ export default function Experience() {
 
       <header className="resume-hero">
         <div>
-          <p className="eyebrow">Professional résumé</p>
+          <p className="eyebrow">Work history</p>
           <h1>Dallin “Danny” Stone</h1>
           <p className="resume-subtitle">Senior Software Engineer · C#/.NET · React/Angular · TypeScript · SQL Server · Azure</p>
         </div>
@@ -54,7 +54,7 @@ export default function Experience() {
       </header>
 
       <section className="resume-summary" aria-labelledby="summary-title">
-        <h2 id="summary-title">Engineering profile</h2>
+        <h2 id="summary-title">The short version</h2>
         <div className="resume-summary__content">
           <p>I help teams make good decisions about complex, data-heavy business software.</p>
           <ul className="profile-highlights">
@@ -67,8 +67,8 @@ export default function Experience() {
 
       <section className="skills-section" aria-labelledby="skills-title">
         <div className="section-heading">
-          <p className="eyebrow">Core capabilities</p>
-          <h2 id="skills-title">The work I’m known for</h2>
+          <p className="eyebrow">What I do</p>
+          <h2 id="skills-title">The useful overlap</h2>
         </div>
         <div className="resume-capabilities-grid">
           {coreCapabilities.map((group) => (

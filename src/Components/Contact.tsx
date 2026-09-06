@@ -46,11 +46,11 @@ export default function Contact() {
       <PageMeta route="/contact" />
 
       <header className="page-intro contact-intro">
-        <p className="eyebrow">Get in touch</p>
-        <h1>Let’s talk about the system behind the problem.</h1>
+        <p className="eyebrow">Contact</p>
+        <h1>Send me a note.</h1>
         <p>
-          Have a question about my experience, an engineering challenge, or a role
-          that might be a good fit? Send a note and I’ll get back to you.
+          If you want to talk about my experience, a stubborn engineering problem,
+          or a role that might fit, I’d be glad to hear from you.
         </p>
         <a className="text-link" href="https://www.linkedin.com/in/dallinstone" target="_blank" rel="me noreferrer">
           Prefer LinkedIn? Visit my profile <span aria-hidden="true">↗</span>
@@ -81,7 +81,7 @@ export default function Contact() {
         </div>
 
         <div className="form-footer">
-          <p id="form-privacy">Your details are used only to reply to this message.</p>
+          <p id="form-privacy">Messages are delivered through EmailJS. I use your details only to reply.</p>
           <button className="button button--primary" type="submit" disabled={submitState === "sending" || !isConfigured}>
             {!isConfigured ? "Form unavailable" : submitState === "sending" ? "Sending…" : "Send message"}
           </button>
@@ -89,8 +89,8 @@ export default function Contact() {
 
         <p
           className={`form-status${submitState === "error" ? " form-status--error" : ""}`}
-          role="status"
-          aria-live="polite"
+          role={submitState === "error" ? "alert" : "status"}
+          aria-live={submitState === "error" ? "assertive" : "polite"}
         >
           {statusMessage}
         </p>

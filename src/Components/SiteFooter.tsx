@@ -6,7 +6,7 @@ export default function SiteFooter() {
       <div className="footer-shell">
         <div>
           <p className="footer-name">Danny Stone</p>
-          <p>Database engineering, clear communication, and technical translation for complex business software.</p>
+          <p>Senior software engineer. Databases, .NET, React, and the people who rely on them.</p>
         </div>
         <nav aria-label="Social profiles">
           <span className="footer-social-links">

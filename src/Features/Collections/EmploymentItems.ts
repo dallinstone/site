@@ -13,7 +13,6 @@ export const empItems: EmploymentItem[] = [
       "Engineer Azure-centered, event-driven integrations across HCM and workforce-management products using Azure Service Bus, Azure Functions, RabbitMQ, and C# webhooks.",
       "Help modernize legacy workforce-management services from .NET Framework 4 to .NET 8 with dependency injection and contemporary data-access patterns.",
       "Maintain system quality through unit, API, and browser testing with xUnit, Moq, NSubstitute, Bruno, and Playwright while collaborating within established SDLC and architecture standards.",
-      "Use Claude Code, GitHub Copilot, and ChatGPT Codex to accelerate implementation, refactoring, troubleshooting, and test development while retaining normal engineering review and quality standards.",
     ],
   },
   {

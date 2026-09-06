@@ -1,7 +1,7 @@
 {
   "/": {
     "title": "Danny Stone",
-    "description": "Danny Stone is a senior software engineer who translates customer and product needs into clear technical requirements, efficient database systems, and reliable business software."
+    "description": "Danny Stone is a senior software engineer working across .NET applications, SQL Server, React, Azure, and the people who use the software."
   },
   "/experience": {
     "title": "Experience",
@@ -13,11 +13,15 @@
   },
   "/about": {
     "title": "About",
-    "description": "Learn how Danny Stone connects database engineering, customer communication, and technical translation to make complex business software clearer and more reliable."
+    "description": "Learn how Danny Stone works across application code, databases, customer needs, and business processes."
   },
   "/contact": {
     "title": "Contact",
     "description": "Contact Danny Stone about database engineering, application performance, requirements discovery, technical translation, integrations, or professional opportunities."
+  },
+  "/budgenvelopes": {
+    "title": "BudgEnvelopes Privacy",
+    "description": "Privacy policy for the BudgEnvelopes app."
   },
   "__notFound": {
     "title": "Page not found",
