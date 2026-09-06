@@ -41,8 +41,8 @@ export default function HomePage() {
     const hero = heroRef.current;
     const stage = hero?.querySelector<HTMLElement>(".hero__stage");
     const content = hero?.querySelector<HTMLElement>(".hero__content");
-    const name = hero?.querySelector<HTMLElement>(".hero__name");
-    if (!hero || !stage || !content || !name) return;
+    const reveal = hero?.querySelector<HTMLElement>(".hero__statement");
+    if (!hero || !stage || !content || !reveal) return;
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     let frameId = 0;
@@ -62,12 +62,10 @@ export default function HomePage() {
       const settleDistance = totalTravel * 0.68;
       const progress = Math.min(1, travelled / settleDistance);
       const easedProgress = 1 - Math.pow(1 - progress, 3);
-      const nameBottom = name.offsetTop + name.offsetHeight;
       const stagePaddingTop = Number.parseFloat(window.getComputedStyle(stage).paddingTop) || 0;
-      const openingBottomGap = Math.min(380, Math.max(320, stage.clientHeight * 0.44));
       const openingShift = Math.max(
         0,
-        stage.clientHeight - stagePaddingTop - nameBottom - openingBottomGap,
+        stage.clientHeight - stagePaddingTop - reveal.offsetTop + 24,
       );
 
       hero.style.setProperty(
@@ -99,20 +97,24 @@ export default function HomePage() {
       <section ref={heroRef} className="hero" aria-labelledby="hero-title">
         <div className="hero__stage">
           <div className="hero__content">
-            <p className="hero__kicker"><span>Senior software engineer</span><span>.NET / SQL Server / React / Azure</span></p>
-            <h1 className="hero__name" id="hero-title">
-              <span>Danny</span>
-              <span>Stone</span>
-            </h1>
-            <p className="hero__statement">I build the business software people rely on.</p>
-            <p className="hero__lede">
-              My best work happens in the unglamorous, important middle: slow queries,
-              fuzzy requirements, aging .NET systems, and the conversations needed to
-              make all of that less painful.
-            </p>
-            <div className="hero__actions" aria-label="Primary actions">
-              <Link className="button button--primary" to="/experience">Read my work history</Link>
-              <Link className="button button--secondary" to="/projects">See what I’ve built</Link>
+            <div className="hero__opening">
+              <p className="hero__kicker"><span>Senior software engineer</span><span>.NET / SQL Server / React / Azure</span></p>
+              <h1 className="hero__name" id="hero-title">
+                <span>Danny</span>
+                <span>Stone</span>
+              </h1>
+            </div>
+            <div className="hero__details">
+              <p className="hero__statement">I build the business software people rely on.</p>
+              <p className="hero__lede">
+                My best work happens in the unglamorous, important middle: slow queries,
+                fuzzy requirements, aging .NET systems, and the conversations needed to
+                make all of that less painful.
+              </p>
+              <div className="hero__actions" aria-label="Primary actions">
+                <Link className="button button--primary" to="/experience">Read my work history</Link>
+                <Link className="button button--secondary" to="/projects">See what I’ve built</Link>
+              </div>
             </div>
           </div>
 
