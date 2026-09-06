@@ -49,7 +49,7 @@ export default function Projects() {
 
       <header className="page-intro projects-intro">
         <p className="eyebrow">Two side projects</p>
-        <h1>I scratched my own itch. Twice.</h1>
+        <h1>Two problems I couldn’t leave alone.</h1>
         <p>
           One started with a Pathfinder one-shot. The other started with a quilt.
           Both became real, deployed products because I couldn’t find the tool I wanted.

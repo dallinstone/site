@@ -131,7 +131,6 @@ export default function HomePage() {
                 height="1460"
               />
             </span>
-            <figcaption>Usually happier than my debugger suggests.</figcaption>
           </figure>
         </div>
       </section>
