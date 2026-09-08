@@ -24,12 +24,12 @@ const projects = [
     number: "02",
     id: "hst-designer",
     name: "HST Designer",
-    category: "Interactive quilt-pattern design",
+    category: "Half-square triangle quilt design",
     url: "https://half-square-triangle.com",
     displayUrl: "half-square-triangle.com",
     visual: "quilt" as const,
     description:
-      "A visual workspace for designing quilts from half-square-triangle blocks. The React interface supports drag-and-drop composition, custom color palettes, rotation and flipping, undo and redo, configurable quilt dimensions, and saved or shareable patterns backed by Firebase.",
+      "A visual workspace for designing half-square triangle quilts. The React interface supports drag-and-drop composition, custom color palettes, rotation and flipping, undo and redo, configurable quilt dimensions, and saved or shareable patterns backed by Firebase.",
     tags: ["React", "Vite", "Firebase", "Drag & drop", "Interactive canvas"],
     problem:
       "I had trouble visualizing quilt patterns in colors other than the creator’s examples. I built HST Designer so I could experiment with palettes and layouts before committing fabric to a pattern.",

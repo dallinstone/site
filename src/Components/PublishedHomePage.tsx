@@ -13,8 +13,8 @@ const featuredProjects = [
   },
   {
     name: "HST Designer",
-    category: "Quilting / React + Firebase",
-    text: "A visual quilt-design workspace for trying colors and layouts before cutting into the fabric.",
+    category: "Half-square triangle quilts / React + Firebase",
+    text: "A visual workspace for designing half-square triangle quilts in your own colors before cutting the fabric.",
     path: "/?version=01&page=projects#hst-designer",
   },
 ];

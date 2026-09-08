@@ -35,9 +35,9 @@ export default function Experience() {
   const [openItem, setOpenItem] = useState<number | null>(0);
   const location = useLocation();
   const requestedVersion = new URLSearchParams(location.search).get("version");
-  const version = requestedVersion === "01" ? "published" : requestedVersion === "03" ? "monograph" : "workspace";
-  const versionNumber = version === "published" ? "01" : version === "workspace" ? "02" : "03";
-  const returnPath = version === "published" ? "/?version=01" : version === "workspace" ? "/?version=02#career" : "/?version=03#v3-career";
+  const version = requestedVersion === "01" ? "published" : requestedVersion === "03" ? "monograph" : requestedVersion === "04" ? "studio" : requestedVersion === "05" ? "oddity" : "workspace";
+  const versionNumber = version === "published" ? "01" : version === "workspace" ? "02" : version === "monograph" ? "03" : version === "studio" ? "04" : "05";
+  const returnPath = version === "published" ? "/?version=01" : version === "workspace" ? "/?version=02#career" : version === "monograph" ? "/?version=03" : version === "studio" ? "/?version=04" : "/?version=05#v5-career";
 
   return (
     <div className={`resume-immersive resume-immersive--${version}`}>

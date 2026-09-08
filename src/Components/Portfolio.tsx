@@ -1,12 +1,14 @@
 import { ReactNode, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { empItems } from "../Features/Collections/EmploymentItems";
-import portrait from "../public/profile-1200.jpeg";
+import portrait from "../public/profile-garden-1500.jpg";
 import ContactForm from "./ContactForm";
 import MonographPortfolio from "./MonographPortfolio";
+import OddityPortfolio from "./OddityPortfolio";
 import PageMeta from "./PageMeta";
 import ProjectVisual from "./ProjectVisual";
 import PublishedPortfolio from "./PublishedPortfolio";
+import StudioReelPortfolio from "./StudioReelPortfolio";
 
 type ViewId = "overview" | "work" | "career" | "practice" | "about" | "contact";
 
@@ -24,11 +26,11 @@ const projects = [
   },
   {
     name: "HST Designer",
-    kind: "Interactive quilt workspace",
+    kind: "Half-square triangle quilt designer",
     url: "https://half-square-triangle.com",
     displayUrl: "half-square-triangle.com",
     visual: "quilt" as const,
-    summary: "A visual canvas for trying half-square-triangle patterns in your own colors before cutting fabric.",
+    summary: "A visual canvas for designing half-square triangle quilts in your own colors before cutting fabric.",
     origin: "Quilt patterns were easy to find and surprisingly hard to imagine outside the example palette.",
     build: "Drag-and-drop composition, transformations, undo and redo, custom palettes and dimensions, Firebase accounts, and shareable saves.",
     stack: ["React", "Firebase", "Interactive canvas", "Product design"],
@@ -107,7 +109,7 @@ function PracticeView() {
 function AboutView() {
   return (
     <section className="console-about" aria-labelledby="console-about-title">
-      <img src={portrait} alt="Danny Stone smiling on a beach" width="1200" height="1460" />
+      <img src={portrait} alt="Danny Stone standing in a garden" width="999" height="1500" />
       <div><p>Danny, beyond the keyboard</p><h1 id="console-about-title">A whole person ships better work.</h1><span>I play music, collect LEGO, read fantasy, play Pathfinder and video games, re-watch sitcoms, and share a home with three dogs named Tucker, Rocco, and Benny.</span></div>
     </section>
   );
@@ -160,8 +162,8 @@ function WorkspacePortfolio() {
   );
 }
 
-type SiteVersion = "01" | "02" | "03";
-const siteVersions: SiteVersion[] = ["01", "02", "03"];
+type SiteVersion = "01" | "02" | "03" | "04" | "05";
+const siteVersions: SiteVersion[] = ["01", "02", "03", "04", "05"];
 
 export default function Portfolio() {
   const location = useLocation();
@@ -192,7 +194,7 @@ export default function Portfolio() {
           {siteVersions.map((item) => <option value={item} key={item}>{item}</option>)}
         </select>
       </label>
-      {version === "01" ? <PublishedPortfolio /> : version === "02" ? <WorkspacePortfolio /> : <MonographPortfolio />}
+      {version === "01" ? <PublishedPortfolio /> : version === "02" ? <WorkspacePortfolio /> : version === "03" ? <MonographPortfolio /> : version === "04" ? <StudioReelPortfolio /> : <OddityPortfolio />}
     </div>
   );
 }

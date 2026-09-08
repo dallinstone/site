@@ -1,69 +1,94 @@
+import { ReactNode, useState } from "react";
 import { Link } from "react-router-dom";
 import { empItems } from "../Features/Collections/EmploymentItems";
 import portrait from "../public/profile-1200.jpeg";
+import gardenPortrait from "../public/profile-garden-1500.jpg";
 import ContactForm from "./ContactForm";
 import ProjectVisual from "./ProjectVisual";
 
-export default function MonographPortfolio() {
-  return (
-    <article className="edition-three">
-      <nav className="edition-three__rail" aria-label="Version 03 sections">
-        <a className="edition-three__monogram" href="#v3-intro">D/S</a>
-        <div><a href="#v3-intro">00</a><a href="#v3-work">01</a><a href="#v3-career">02</a><a href="#v3-method">03</a><a href="#v3-about">04</a><a href="#v3-contact">05</a></div>
-      </nav>
+type AtlasView = "work" | "career" | "method" | "about" | "contact";
 
-      <section className="edition-three__intro" id="v3-intro">
-        <header><span>Monograph № 03</span><span>Senior software engineer</span><span>Arizona · 2026</span></header>
+const atlasNodes: Array<{ id: AtlasView; number: string; label: string }> = [
+  { id: "work", number: "01", label: "Selected work" },
+  { id: "career", number: "02", label: "Career" },
+  { id: "method", number: "03", label: "Practice" },
+  { id: "about", number: "04", label: "About Danny" },
+  { id: "contact", number: "05", label: "Contact" },
+];
+
+function WorkSheet() {
+  return (
+    <section className="atlas-sheet__work" aria-labelledby="atlas-work-title">
+      <header><p>Things I wanted to exist</p><h2 id="atlas-work-title">Selected work</h2></header>
+      <article><div><span>01 / Pathfinder planning</span><h3>PF2e Equipment Tracker</h3><p>A data-driven equipment planner built around availability, budget, and a complete one-shot workflow.</p><a href="https://pf2e-equipment.com" target="_blank" rel="noreferrer">Open project ↗</a></div><figure><ProjectVisual variant="equipment" /></figure></article>
+      <article><div><span>02 / Half-square triangle quilts</span><h3>HST Designer</h3><p>A visual canvas for designing half-square triangle quilts in your own colors before cutting into the fabric.</p><a href="https://half-square-triangle.com" target="_blank" rel="noreferrer">Open project ↗</a></div><figure><ProjectVisual variant="quilt" /></figure></article>
+    </section>
+  );
+}
+
+function CareerSheet() {
+  return (
+    <section className="atlas-sheet__career" aria-labelledby="atlas-career-title">
+      <header><p>Experience</p><h2 id="atlas-career-title">Career</h2><Link to="/resume?version=03">Detailed résumé ↗</Link></header>
+      <div>{empItems.map((role, index) => <article key={role.name}><span>0{index + 1}</span><time>{role.dates}</time><div><h3>{role.name}</h3><strong>{role.title}</strong></div><p>{role.summary}</p></article>)}</div>
+    </section>
+  );
+}
+
+function MethodSheet() {
+  return (
+    <section className="atlas-sheet__method" aria-labelledby="atlas-method-title">
+      <header><p>How I work</p><h2 id="atlas-method-title">Follow the problem.</h2></header>
+      <ol><li><span>01</span><strong>Trace the whole path.</strong><p>From the person using it, through the application, and into the data.</p></li><li><span>02</span><strong>Translate the need.</strong><p>Turn competing priorities and partial context into a decision the team can use.</p></li><li><span>03</span><strong>Leave it healthier.</strong><p>Ship the useful fix and make the system clearer for whoever owns it next.</p></li></ol>
+      <blockquote>Find the real constraint.<br />Make the decision legible.</blockquote>
+    </section>
+  );
+}
+
+function AboutSheet() {
+  return (
+    <section className="atlas-sheet__about" aria-labelledby="atlas-about-title">
+      <img src={gardenPortrait} alt="Danny Stone standing in a garden" width="999" height="1500" />
+      <div><p>Beyond the keyboard</p><h2 id="atlas-about-title">A whole person ships better work.</h2><span>I play music, collect LEGO, read fantasy, play Pathfinder and video games, re-watch sitcoms, and share a home with three dogs named Tucker, Rocco, and Benny.</span></div>
+    </section>
+  );
+}
+
+function ContactSheet() {
+  return (
+    <section className="atlas-sheet__contact" aria-labelledby="atlas-contact-title">
+      <header><p>Contact Danny</p><h2 id="atlas-contact-title">Let’s talk.</h2><span>An interesting role, a stubborn engineering problem, or a question about my work—I’d be glad to hear it.</span></header>
+      <ContactForm className="atlas-contact-form console-contact__form" />
+    </section>
+  );
+}
+
+const sheets: Record<AtlasView, ReactNode> = {
+  work: <WorkSheet />, career: <CareerSheet />, method: <MethodSheet />, about: <AboutSheet />, contact: <ContactSheet />,
+};
+
+export default function MonographPortfolio() {
+  const [activeView, setActiveView] = useState<AtlasView | null>(null);
+
+  return (
+    <article className={`portfolio-atlas${activeView ? " portfolio-atlas--open" : ""}`}>
+      <header className="atlas-header"><button type="button" onClick={() => setActiveView(null)}><strong>DS</strong><span>Danny Stone</span></button><p>Application · Data · People</p><Link to="/resume?version=03">Résumé ↗</Link></header>
+
+      <section className="atlas-map">
+        <div className="atlas-map__grid" aria-hidden="true" />
+        <p className="atlas-map__kicker">Senior software engineer / Portfolio 03</p>
         <h1><span>Danny</span><span>Stone</span></h1>
         <figure><img src={portrait} alt="Danny Stone smiling on a beach" width="1200" height="1460" /></figure>
-        <p className="edition-three__declaration">I make complex business software easier to understand, use, and change.</p>
-        <dl><div><dt>Application</dt><dd>.NET · React · Angular</dd></div><div><dt>Data</dt><dd>SQL Server · Dapper · EF Core</dd></div><div><dt>Cloud</dt><dd>Azure · Events · Integrations</dd></div></dl>
-        <a className="edition-three__continue" href="#v3-work">Turn the page ↓</a>
+        <p className="atlas-map__statement">I untangle complex business software across applications, databases, integrations, and requirements.</p>
+        <nav aria-label="Explore Danny Stone’s portfolio">
+          {atlasNodes.map((node) => <button className={`atlas-node atlas-node--${node.id}`} type="button" onClick={() => setActiveView(node.id)} key={node.id}><span>{node.number}</span><strong>{node.label}</strong></button>)}
+        </nav>
+        <p className="atlas-map__hint">Choose a point to explore</p>
       </section>
 
-      <section className="edition-three__work edition-three__folio" id="v3-work">
-        <header><span>Folio 01</span><h2>Two useful obsessions.</h2><p>Side projects, designed and shipped end to end.</p></header>
-        <article>
-          <div><span>01 / Pathfinder planning</span><h3>PF2e Equipment Tracker</h3><p>A character-equipment planner organized around item availability, a finite pile of gold, and the actual rhythm of preparing a one-shot character.</p><ul><li>React</li><li>Vite</li><li>Python</li><li>Custom drag & drop</li></ul><a href="https://pf2e-equipment.com" target="_blank" rel="noreferrer">Visit the project ↗</a></div>
-          <figure><ProjectVisual variant="equipment" /></figure>
-        </article>
-        <article>
-          <div><span>02 / Quilt design</span><h3>HST Designer</h3><p>A visual workspace for testing half-square-triangle layouts and color palettes before cutting into the fabric.</p><ul><li>React</li><li>Firebase</li><li>Interactive canvas</li><li>Product design</li></ul><a href="https://half-square-triangle.com" target="_blank" rel="noreferrer">Visit the project ↗</a></div>
-          <figure><ProjectVisual variant="quilt" /></figure>
-        </article>
-      </section>
+      {activeView && <aside className={`atlas-sheet atlas-sheet--${activeView}`} aria-label={`${atlasNodes.find((node) => node.id === activeView)?.label} panel`}><button className="atlas-sheet__close" type="button" onClick={() => setActiveView(null)} aria-label="Close panel">Close ×</button>{sheets[activeView]}</aside>}
 
-      <section className="edition-three__career edition-three__folio" id="v3-career">
-        <header><span>Folio 02 / Career</span><h2>Work that crosses boundaries.</h2><Link to="/resume?version=03">Detailed résumé ↗</Link></header>
-        <div className="edition-three__ledger">
-          {empItems.map((role, index) => (
-            <article key={role.name}><span>0{index + 1}</span><time>{role.dates}</time><div><h3>{role.name}</h3><strong>{role.title}</strong></div><p>{role.summary}</p></article>
-          ))}
-        </div>
-        <p className="edition-three__career-note">Application engineering, database work, integration design, and the human work of turning partial context into a useful plan.</p>
-      </section>
-
-      <section className="edition-three__method edition-three__folio" id="v3-method">
-        <header><span>Folio 03 / Method</span><h2>Follow the problem.</h2></header>
-        <div className="edition-three__method-lines">
-          <article><span>01</span><h3>Trace it</h3><p>Follow the behavior from the person using it, through the application, all the way into the data.</p></article>
-          <article><span>02</span><h3>Translate it</h3><p>Turn competing needs and incomplete context into a decision the whole team can understand.</p></article>
-          <article><span>03</span><h3>Leave it better</h3><p>Ship the useful fix, then leave behind a system that is clearer and easier for the next person to own.</p></article>
-        </div>
-        <blockquote>Find the real constraint.<br />Make the decision legible.<br /><em>Keep moving.</em></blockquote>
-      </section>
-
-      <section className="edition-three__about edition-three__folio" id="v3-about">
-        <img src={portrait} alt="Danny Stone smiling on a beach" width="1200" height="1460" />
-        <header><span>Folio 04 / After hours</span><h2>A whole person ships better work.</h2></header>
-        <p>I play music, collect LEGO, read fantasy, play Pathfinder and video games, re-watch sitcoms, and share a home with three dogs named Tucker, Rocco, and Benny.</p>
-      </section>
-
-      <section className="edition-three__contact edition-three__folio" id="v3-contact">
-        <header><span>Final folio / Contact</span><h2>Send Danny<br />a note.</h2><p>An interesting role, a stubborn engineering problem, or a question about my work—I’d be glad to hear it.</p></header>
-        <ContactForm className="edition-three__form console-contact__form" />
-        <footer><strong>Danny Stone</strong><nav><a href="https://github.com/dallinstone" target="_blank" rel="me noreferrer">GitHub ↗</a><a href="https://www.linkedin.com/in/dallinstone" target="_blank" rel="me noreferrer">LinkedIn ↗</a><Link to="/resume?version=03">Résumé →</Link></nav><span>© {new Date().getFullYear()}</span></footer>
-      </section>
+      <footer className="atlas-footer"><span>Built by Danny Stone</span><span>03 / Portfolio</span><span>© {new Date().getFullYear()}</span></footer>
     </article>
   );
 }
