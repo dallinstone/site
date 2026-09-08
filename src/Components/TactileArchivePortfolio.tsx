@@ -18,7 +18,7 @@ function IndexFolder({ openNext }: { openNext: () => void }) {
     <div className="archive-folder__tab">A–01 / Identity</div>
     <div className="archive-index-copy"><p className="archive-stamp">Portfolio · Version 05</p><h1 id="archive-title"><span>Danny</span><span>Stone</span></h1><strong>Software, made tangible.</strong><p>I trace complex business systems from the person using them to the data underneath—then leave the whole thing easier to understand and own.</p><button type="button" onClick={openNext}>Pull the first file <span aria-hidden="true">→</span></button></div>
     <figure className="archive-portrait-card"><img src={portrait} alt="Danny Stone smiling" width="640" height="640" /><figcaption><span>SUBJECT</span><strong>Dallin “Danny” Stone</strong><small>Senior software engineer</small></figcaption></figure>
-    <aside className="archive-catalog-card"><span>PRIMARY MATERIALS</span><p>C# / .NET<br />SQL Server<br />React / Angular<br />Azure</p><small>Filed 2026 · PHX</small></aside>
+    <aside className="archive-catalog-card"><span>PRIMARY MATERIALS</span><p>C# / .NET<br />SQL Server<br />React / Angular<br />Azure</p><small>Filed 2026 · DS–05</small></aside>
   </section>;
 }
 
@@ -56,7 +56,7 @@ function FieldNotesFolder() {
 function PersonalFolder() {
   return <section className="archive-folder archive-folder--personal" aria-labelledby="archive-personal-title">
     <div className="archive-folder__tab">E–03 / Off duty</div>
-    <figure><img src={gardenPortrait} alt="Danny Stone standing in a garden" width="999" height="1500" /><figcaption>OUTSIDE / PHOENIX, AZ</figcaption></figure>
+    <figure><img src={gardenPortrait} alt="Danny Stone standing in a garden" width="999" height="1500" /><figcaption>PERSONAL ARCHIVE / OFF DUTY</figcaption></figure>
     <div className="archive-personal-copy"><p>Beyond the keyboard</p><h2 id="archive-personal-title">A whole person ships better work.</h2><span>I play music, collect LEGO, read fantasy, play Pathfinder and video games, re-watch sitcoms, and share a home with three dogs named Tucker, Rocco, and Benny.</span><div className="archive-personal-labels"><i>Music</i><i>LEGO</i><i>Fantasy</i><i>Pathfinder</i><i>Three dogs</i></div></div>
     <blockquote>“Curiosity travels well between hobbies and systems.”</blockquote>
   </section>;
@@ -67,7 +67,7 @@ function ContactFolder() {
     <div className="archive-folder__tab">F–01 / Correspondence</div>
     <header><p>Open correspondence</p><h2 id="archive-contact-title">Send a note.</h2><span>An interesting role, a stubborn engineering problem, or a question about my work—I’d be glad to hear it.</span><nav><a href="https://github.com/dallinstone" target="_blank" rel="me noreferrer">GitHub ↗</a><a href="https://www.linkedin.com/in/dallinstone" target="_blank" rel="me noreferrer">LinkedIn ↗</a></nav></header>
     <div className="archive-contact-sheet"><span className="archive-contact-sheet__label">FORM DS–C1 / PLEASE TYPE CLEARLY</span><ContactForm className="archive-contact-form" /></div>
-    <aside><span>ROUTE TO</span><strong>Danny Stone</strong><small>Phoenix, Arizona<br />United States</small></aside>
+    <aside><span>ROUTE TO</span><strong>Danny Stone</strong><small>Personal reply<br />Direct correspondence</small></aside>
   </section>;
 }
 
