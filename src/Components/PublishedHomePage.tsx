@@ -9,13 +9,13 @@ const featuredProjects = [
     name: "PF2e Equipment Tracker",
     category: "Pathfinder 2e / React",
     text: "A character-equipment planner built because the existing tools didn’t fit how I prepare for one-shots.",
-    path: "/projects#pf2e-equipment-tracker",
+    path: "/?version=01&page=projects#pf2e-equipment-tracker",
   },
   {
     name: "HST Designer",
     category: "Quilting / React + Firebase",
     text: "A visual quilt-design workspace for trying colors and layouts before cutting into the fabric.",
-    path: "/projects#hst-designer",
+    path: "/?version=01&page=projects#hst-designer",
   },
 ];
 
@@ -112,8 +112,8 @@ export default function HomePage() {
                 make all of that less painful.
               </p>
               <div className="hero__actions" aria-label="Primary actions">
-                <Link className="button button--primary" to="/experience">Read my work history</Link>
-                <Link className="button button--secondary" to="/projects">See what I’ve built</Link>
+                <Link className="button button--primary" to="/resume?version=01">Read my work history</Link>
+                <Link className="button button--secondary" to="/?version=01&page=projects">See what I’ve built</Link>
               </div>
             </div>
           </div>
@@ -160,7 +160,7 @@ export default function HomePage() {
               <p className="eyebrow">Side projects</p>
               <h2 id="home-projects-title">Things I made because I wanted them to exist.</h2>
             </div>
-            <Link className="text-link" to="/projects">The longer version <span aria-hidden="true">→</span></Link>
+            <Link className="text-link" to="/?version=01&page=projects">The longer version <span aria-hidden="true">→</span></Link>
           </div>
           <div className="home-projects__grid">
             {featuredProjects.map((project, index) => (
@@ -189,7 +189,7 @@ export default function HomePage() {
               I play music, collect Lego, read fantasy, play Pathfinder and video games,
               re-watch sitcoms, and share a home with three dogs named Tucker, Rocco, and Benny.
             </p>
-            <Link className="text-link" to="/about">A little more about me <span aria-hidden="true">→</span></Link>
+            <Link className="text-link" to="/?version=01&page=about">A little more about me <span aria-hidden="true">→</span></Link>
           </div>
         </section>
       </div>

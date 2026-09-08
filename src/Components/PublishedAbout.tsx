@@ -28,7 +28,7 @@ const problems = [
 export default function About() {
   return (
     <div className="about-page page-shell">
-      <PageMeta route="/about" />
+      <PageMeta route="/" />
 
       <header className="page-intro about-intro">
         <p className="eyebrow">About</p>
@@ -88,7 +88,7 @@ export default function About() {
       <section className="page-cta">
         <h2>Want the chronological version?</h2>
         <p>My résumé has the systems, integrations, teams, and dates.</p>
-        <Link className="button button--primary" to="/experience">Go to work history</Link>
+        <Link className="button button--primary" to="/resume?version=01">Go to work history</Link>
       </section>
     </div>
   );

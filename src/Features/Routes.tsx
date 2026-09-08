@@ -1,12 +1,9 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import App from "../App";
-import About from "../Components/About";
 import Budgenvelopes from "../Components/Budgenvelopes";
-import Contact from "../Components/Contact";
 import Experience from "../Components/Experience/Experience";
-import HomePage from "../Components/HomePage";
 import NotFound from "../Components/NotFound";
-import Projects from "../Components/Projects";
+import Portfolio from "../Components/Portfolio";
 import RouteError from "../Components/RouteError";
 
 export const router = createBrowserRouter([
@@ -15,12 +12,13 @@ export const router = createBrowserRouter([
     element: <App />,
     errorElement: <RouteError />,
     children: [
-      { index: true, element: <HomePage /> },
+      { index: true, element: <Portfolio /> },
       { path: "home", element: <Navigate to="/" replace /> },
-      { path: "experience", element: <Experience /> },
-      { path: "projects", element: <Projects /> },
-      { path: "contact", element: <Contact /> },
-      { path: "about", element: <About /> },
+      { path: "resume", element: <Experience /> },
+      { path: "experience", element: <Navigate to="/resume" replace /> },
+      { path: "projects", element: <Navigate to="/#work" replace /> },
+      { path: "contact", element: <Navigate to="/#contact" replace /> },
+      { path: "about", element: <Navigate to="/#about" replace /> },
       { path: "budgenvelopes", element: <Budgenvelopes /> },
       { path: "*", element: <NotFound /> },
     ],

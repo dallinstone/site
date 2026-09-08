@@ -5,6 +5,7 @@ import SiteFooter from "./Components/SiteFooter";
 
 export default function App() {
   const location = useLocation();
+  const isImmersive = location.pathname === "/" || location.pathname === "/resume";
 
   useEffect(() => {
     if (!location.hash) {
@@ -41,12 +42,12 @@ export default function App() {
   }, [location.hash, location.pathname]);
 
   return (
-    <div className="site-shell">
-      <NavBar />
+    <div className={isImmersive ? "portfolio-root" : "site-shell"}>
+      {!isImmersive && <NavBar />}
       <main id="main-content">
         <Outlet />
       </main>
-      <SiteFooter />
+      {!isImmersive && <SiteFooter />}
     </div>
   );
 }

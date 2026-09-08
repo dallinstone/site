@@ -2,7 +2,12 @@ type ProjectVisualProps = {
   variant: "equipment" | "quilt";
 };
 
-const quiltTiles = ["a", "b", "c", "d", "b", "a", "d", "c", "c", "d", "a", "b"];
+const quiltTiles = [
+  ["green", "se"], ["green", "sw"], ["orange", "se"], ["orange", "sw"],
+  ["green", "ne"], ["green", "nw"], ["orange", "ne"], ["orange", "nw"],
+  ["blue", "se"], ["blue", "sw"], ["lime", "se"], ["lime", "sw"],
+  ["blue", "ne"], ["blue", "nw"], ["lime", "ne"], ["lime", "nw"],
+] as const;
 
 export default function ProjectVisual({ variant }: ProjectVisualProps) {
   if (variant === "equipment") {
@@ -37,7 +42,12 @@ export default function ProjectVisual({ variant }: ProjectVisualProps) {
         <span className="quilt-swatch quilt-swatch--orange" />
       </div>
       <div className="quilt-preview__grid">
-        {quiltTiles.map((tile, index) => <span className={`quilt-tile quilt-tile--${tile}`} key={`${tile}-${index}`} />)}
+        {quiltTiles.map(([color, direction], index) => (
+          <span
+            className={`quilt-tile quilt-tile--${color} quilt-tile--${direction}`}
+            key={`${color}-${direction}-${index}`}
+          />
+        ))}
       </div>
     </div>
   );

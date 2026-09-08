@@ -1,38 +1,13 @@
-import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function SiteFooter() {
   return (
     <footer className="site-footer">
       <div className="footer-shell">
-        <div>
-          <p className="footer-name">Danny Stone</p>
-          <p>Senior software engineer. Databases, .NET, React, and the people who rely on them.</p>
-        </div>
-        <nav aria-label="Social profiles">
-          <span className="footer-social-links">
-            <a
-              className="footer-social-link"
-              href="https://github.com/dallinstone"
-              rel="me"
-              aria-label="Danny Stone on GitHub"
-              title="GitHub"
-            >
-              <FaGithub aria-hidden="true" />
-              <span className="sr-only">GitHub</span>
-            </a>
-            <a
-              className="footer-social-link"
-              href="https://www.linkedin.com/in/dallinstone"
-              rel="me"
-              aria-label="Danny Stone on LinkedIn"
-              title="LinkedIn"
-            >
-              <FaLinkedin aria-hidden="true" />
-              <span className="sr-only">LinkedIn</span>
-            </a>
-          </span>
-        </nav>
-        <p className="footer-copyright">© {new Date().getFullYear()} Danny Stone</p>
+        <Link className="brand" to="/"><span className="brand__mark" aria-hidden="true">DS</span><span className="brand__name"><strong>Danny Stone</strong><small>Senior software engineer</small></span></Link>
+        <p>Built with care, curiosity, and probably a dog nearby.</p>
+        <nav aria-label="Footer"><a href="https://github.com/dallinstone" target="_blank" rel="me noreferrer">GitHub ↗</a><a href="https://www.linkedin.com/in/dallinstone" target="_blank" rel="me noreferrer">LinkedIn ↗</a><Link to="/resume">Résumé</Link></nav>
+        <p>© {new Date().getFullYear()} Danny Stone</p>
       </div>
     </footer>
   );

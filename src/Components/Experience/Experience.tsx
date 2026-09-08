@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { eduItems } from "../../Features/Collections/EduItems";
 import { empItems } from "../../Features/Collections/EmploymentItems";
 import PageMeta from "../PageMeta";
@@ -32,14 +33,25 @@ const supportingGroups = [
 
 export default function Experience() {
   const [openItem, setOpenItem] = useState<number | null>(0);
+  const location = useLocation();
+  const requestedVersion = new URLSearchParams(location.search).get("version");
+  const version = requestedVersion === "01" ? "published" : requestedVersion === "03" ? "monograph" : "workspace";
+  const versionNumber = version === "published" ? "01" : version === "workspace" ? "02" : "03";
+  const returnPath = version === "published" ? "/?version=01" : version === "workspace" ? "/?version=02#career" : "/?version=03#v3-career";
 
   return (
-    <div className="resume-page page-shell">
-      <PageMeta route="/experience" />
+    <div className={`resume-immersive resume-immersive--${version}`}>
+      <PageMeta route="/resume" />
+      <header className="resume-immersive__bar">
+        <Link to={returnPath}>← Back to version {versionNumber}</Link>
+        <strong>Danny Stone / Résumé</strong>
+        <a href="/danny-stone-resume.pdf" download>Download PDF ↓</a>
+      </header>
+      <div className="resume-page page-shell">
 
       <header className="resume-hero">
         <div>
-          <p className="eyebrow">Work history</p>
+          <p className="eyebrow">Résumé / Work history</p>
           <h1>Dallin “Danny” Stone</h1>
           <p className="resume-subtitle">Senior Software Engineer · C#/.NET · React/Angular · TypeScript · SQL Server · Azure</p>
         </div>
@@ -127,6 +139,7 @@ export default function Experience() {
           ))}
         </div>
       </section>
+      </div>
     </div>
   );
 }

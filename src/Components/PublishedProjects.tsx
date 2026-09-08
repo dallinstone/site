@@ -45,7 +45,7 @@ const projects = [
 export default function Projects() {
   return (
     <div className="projects-page page-shell">
-      <PageMeta route="/projects" />
+      <PageMeta route="/" />
 
       <header className="page-intro projects-intro">
         <p className="eyebrow">Two side projects</p>

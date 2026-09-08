@@ -43,7 +43,7 @@ export default function Contact() {
 
   return (
     <div className="contact-page page-shell">
-      <PageMeta route="/contact" />
+      <PageMeta route="/" />
 
       <header className="page-intro contact-intro">
         <p className="eyebrow">Contact</p>
