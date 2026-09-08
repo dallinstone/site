@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "start": "vite",
-    "build": "tsc --noEmit && vite build && node scripts/generate-route-html.mjs",
+    "build": "tsc --noEmit && vite build && node scripts/generate-route-html.mjs && node scripts/generate-site-worker.mjs",
     "preview": "vite preview"
   },
   "dependencies": {
