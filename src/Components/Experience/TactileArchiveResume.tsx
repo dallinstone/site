@@ -1,8 +1,9 @@
-import { ReactNode, useState } from "react";
-import { Link } from "react-router-dom";
+import { ReactNode, useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { eduItems } from "../../Features/Collections/EduItems";
 import { empItems } from "../../Features/Collections/EmploymentItems";
 import { coreCapabilities, resumeHighlights, supportingGroups } from "./resumeData";
+import { resumeSectionFromHash } from "./ResumeVariants";
 
 type ArchiveResumeSection = "profile" | "capabilities" | "experience" | "education";
 
@@ -33,11 +34,15 @@ function EducationSheet() {
 const sheets: Record<ArchiveResumeSection, ReactNode> = { profile: <ProfileSheet />, capabilities: <CapabilitiesSheet />, experience: <ExperienceSheet />, education: <EducationSheet /> };
 
 export default function TactileArchiveResume() {
-  const [active, setActive] = useState<ArchiveResumeSection>("profile");
+  const location = useLocation();
+  const navigate = useNavigate();
+  const fromHash = (hash: string): ArchiveResumeSection => resumeSectionFromHash(hash);
+  const [active, setActive] = useState<ArchiveResumeSection>(() => fromHash(location.hash.slice(1)));
+  useEffect(() => setActive(fromHash(location.hash.slice(1))), [location.hash]);
   return <article className="archive-resume">
     <header><Link to="/?version=05">← Portfolio archive</Link><strong>DS / PERSONNEL FILE / RÉSUMÉ</strong><a href="/danny-stone-resume.pdf" download>Download PDF ↓</a></header>
     <div className="archive-resume-desk">
-      <nav aria-label="Résumé file sections">{sections.map((section) => <button type="button" className={active === section.id ? "active" : ""} aria-current={active === section.id ? "page" : undefined} onClick={() => setActive(section.id)} key={section.id}><span>{section.code}</span><strong>{section.label}</strong></button>)}</nav>
+      <nav aria-label="Résumé file sections">{sections.map((section) => <button type="button" className={active === section.id ? "active" : ""} aria-current={active === section.id ? "page" : undefined} onClick={() => navigate(`/resume?version=05${section.id === "profile" ? "" : `#${section.id}`}`, { replace: true })} key={section.id}><span>{section.code}</span><strong>{section.label}</strong></button>)}</nav>
       <div className="archive-resume-binder"><aside aria-hidden="true"><i /><i /><i /><i /></aside><section key={active}>{sheets[active]}</section></div>
     </div>
     <footer><span>TACTILE TECHNICAL ARCHIVE</span><span>{sections.find((section) => section.id === active)?.code} / {active}</span><span>© {new Date().getFullYear()}</span></footer>

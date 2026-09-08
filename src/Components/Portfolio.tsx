@@ -2,6 +2,8 @@ import { ReactNode, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { eduItems } from "../Features/Collections/EduItems";
 import { empItems } from "../Features/Collections/EmploymentItems";
+import { contactInvitation, personalProfile, portfolioProjects } from "../Features/portfolioContent";
+import { handleTabKey } from "../Features/tabKeyboard";
 import portrait from "../public/profile-garden-1500.jpg";
 import ContactForm from "./ContactForm";
 import MonographPortfolio from "./MonographPortfolio";
@@ -14,31 +16,6 @@ import { coreCapabilities, supportingGroups } from "./Experience/resumeData";
 import VersionPicker, { siteVersions, SiteVersion } from "./VersionPicker";
 
 type ViewId = "overview" | "work" | "career" | "practice" | "about" | "contact";
-
-const projects = [
-  {
-    name: "PF2e Equipment Tracker",
-    kind: "Pathfinder 2e planning tool",
-    url: "https://pf2e-equipment.com",
-    displayUrl: "pf2e-equipment.com",
-    visual: "equipment" as const,
-    summary: "A character-equipment planner designed around level, item availability, and a finite pile of gold.",
-    origin: "The existing tools could tell me what existed, but not help me manage the entire one-shot planning workflow in one place.",
-    build: "A transformed Foundry VTT item corpus, fast filtering, custom drag-and-drop, budget state, persistence, and portable saves.",
-    stack: ["React", "Vite", "Python", "Custom drag & drop"],
-  },
-  {
-    name: "HST Designer",
-    kind: "Half-square triangle quilt designer",
-    url: "https://half-square-triangle.com",
-    displayUrl: "half-square-triangle.com",
-    visual: "quilt" as const,
-    summary: "A visual canvas for designing half-square triangle quilts in your own colors before cutting fabric.",
-    origin: "Quilt patterns were easy to find and surprisingly hard to imagine outside the example palette.",
-    build: "Drag-and-drop composition, transformations, undo and redo, custom palettes and dimensions, Firebase accounts, and shareable saves.",
-    stack: ["React", "Firebase", "Interactive canvas", "Product design"],
-  },
-];
 
 const navItems: Array<[ViewId, string]> = [
   ["overview", "Overview"],
@@ -64,18 +41,18 @@ function OverviewView() {
 
 function WorkView() {
   const [activeProject, setActiveProject] = useState(0);
-  const project = projects[activeProject];
+  const project = portfolioProjects[activeProject];
   return (
     <section className={`console-work console-work--${activeProject + 1}`} aria-labelledby="console-work-title">
       <header className="console-view-heading"><p>Designed and shipped</p><h1 id="console-work-title">Selected work</h1></header>
       <div className="project-switcher" role="tablist" aria-label="Select a project">
-        {projects.map((item, index) => <button role="tab" aria-selected={activeProject === index} onClick={() => setActiveProject(index)} key={item.name}><span>0{index + 1}</span>{item.name}</button>)}
+        {portfolioProjects.map((item, index) => <button id={`console-project-tab-${index}`} role="tab" aria-controls="console-project-panel" aria-selected={activeProject === index} tabIndex={activeProject === index ? 0 : -1} onClick={() => setActiveProject(index)} onKeyDown={(event) => handleTabKey(event, index, portfolioProjects.length, setActiveProject)} key={item.name}><span>0{index + 1}</span>{item.name}</button>)}
       </div>
-      <article className="project-stage">
+      <article className="project-stage" id="console-project-panel" role="tabpanel" aria-labelledby={`console-project-tab-${activeProject}`}>
         <div className="project-stage__copy">
           <p>{project.kind}</p><h2>{project.name}</h2><strong>{project.summary}</strong>
-          <dl><div><dt>The itch</dt><dd>{project.origin}</dd></div><div><dt>The build</dt><dd>{project.build}</dd></div></dl>
-          <ul>{project.stack.map((item) => <li key={item}>{item}</li>)}</ul>
+          <dl><div><dt>The itch</dt><dd>{project.problem}</dd></div><div><dt>The build</dt><dd>{project.engineering}</dd></div></dl>
+          <ul>{project.tags.map((item) => <li key={item}>{item}</li>)}</ul>
           <a href={project.url} target="_blank" rel="noreferrer">Open {project.displayUrl} ↗</a>
         </div>
         <figure><ProjectVisual variant={project.visual} /></figure>
@@ -115,7 +92,7 @@ function AboutView() {
   return (
     <section className="console-about" aria-labelledby="console-about-title">
       <img src={portrait} alt="Danny Stone standing in a garden" width="999" height="1500" />
-      <div><p>Danny, beyond the keyboard</p><h1 id="console-about-title">A whole person ships better work.</h1><span>I play music, collect LEGO, read fantasy, play Pathfinder and video games, re-watch sitcoms, and share a home with three dogs named Tucker, Rocco, and Benny.</span></div>
+      <div><p>{personalProfile.eyebrow}</p><h1 id="console-about-title">{personalProfile.heading}</h1><span>{personalProfile.body}</span></div>
     </section>
   );
 }
@@ -123,9 +100,9 @@ function AboutView() {
 function ContactView() {
   return (
     <section className="console-contact" aria-labelledby="console-contact-title">
-      <div className="console-contact__intro"><p>Send Danny a note</p><h1 id="console-contact-title">Let’s talk.</h1><span>A stubborn problem, an interesting role, or a question about my work—I’d be glad to hear it.</span></div>
+      <div className="console-contact__intro"><p>Send Danny a note</p><h1 id="console-contact-title">Let’s talk.</h1><span>{contactInvitation.body}</span></div>
       <ContactForm className="console-contact__form" />
-      <nav><a href="https://www.linkedin.com/in/dallinstone" target="_blank" rel="me noreferrer">LinkedIn <i>↗</i></a><a href="https://github.com/dallinstone" target="_blank" rel="me noreferrer">GitHub <i>↗</i></a><Link to="/?version=02#career">Résumé <i>→</i></Link></nav>
+      <nav><a href="https://www.linkedin.com/in/dallinstone" target="_blank" rel="me noreferrer">LinkedIn <i>↗</i></a><a href="https://github.com/dallinstone" target="_blank" rel="me noreferrer">GitHub <i>↗</i></a><Link to="/resume?version=02">Résumé <i>→</i></Link></nav>
     </section>
   );
 }
@@ -154,7 +131,7 @@ function WorkspacePortfolio() {
   return (
     <article className={`portfolio-console portfolio-console--${activeView}`}>
       <a className="skip-link" href="#console-view">Skip to current view</a>
-      <header className="console-topbar"><button className="console-brand" onClick={() => selectView("overview")}><strong>DS</strong><span>Danny Stone</span></button><p>Application · Data · People</p><Link to="/?version=02#career">Résumé ↓</Link></header>
+      <header className="console-topbar"><button className="console-brand" onClick={() => selectView("overview")}><strong>DS</strong><span>Danny Stone</span></button><p>Application · Data · People</p><Link to="/resume?version=02">Résumé ↓</Link></header>
       <div className="console-body">
         <nav className="console-nav" aria-label="Portfolio views">
           {navItems.map(([id, label], index) => <button className={activeView === id ? "active" : ""} aria-current={activeView === id ? "page" : undefined} onClick={() => selectView(id)} key={id}><span>0{index + 1}</span><strong>{label}</strong></button>)}
@@ -162,7 +139,7 @@ function WorkspacePortfolio() {
         </nav>
         <section className="console-view" id="console-view" tabIndex={-1} key={activeView}>{views[activeView]}</section>
       </div>
-      <footer className="console-status"><span>Senior software engineer</span><span className="console-status__pulse">Available at dallinstone.com</span><span>© {new Date().getFullYear()}</span></footer>
+      <footer className="console-status"><span>Senior software engineer</span><span className="console-status__pulse">Open to useful conversations</span><span>© {new Date().getFullYear()}</span></footer>
     </article>
   );
 }
@@ -174,7 +151,7 @@ export default function Portfolio() {
   const [version, setVersion] = useState<SiteVersion>(() =>
     siteVersions.includes(requestedVersion as SiteVersion)
       ? requestedVersion!
-      : siteVersions[Math.floor(Math.random() * siteVersions.length)],
+      : "04",
   );
 
   useEffect(() => {
@@ -188,7 +165,15 @@ export default function Portfolio() {
 
   const selectVersion = (nextVersion: SiteVersion) => {
     setVersion(nextVersion);
-    navigate(`/?version=${nextVersion}`, { replace: true });
+    const page = new URLSearchParams(location.search).get("page");
+    const rawSection = page === "projects" ? "work" : page === "about" || page === "contact" ? page : location.hash.slice(1);
+    const section = rawSection === "method" || rawSection === "field-notes" ? "practice" : rawSection === "hst" ? "work" : rawSection;
+    if (nextVersion === "01") {
+      const publishedPage = section === "work" ? "projects" : section === "about" || section === "contact" ? section : null;
+      navigate(`/?version=01${publishedPage ? `&page=${publishedPage}` : ""}`, { replace: true });
+      return;
+    }
+    navigate(`/?version=${nextVersion}${section && section !== "overview" ? `#${section}` : ""}`, { replace: true });
   };
 
   return (

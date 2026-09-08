@@ -1,6 +1,8 @@
-import { PointerEvent, ReactNode, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { PointerEvent, ReactNode, useEffect, useRef, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { empItems } from "../Features/Collections/EmploymentItems";
+import { contactInvitation, personalProfile, portfolioProjects } from "../Features/portfolioContent";
+import { handleTabKey } from "../Features/tabKeyboard";
 import gardenPortrait from "../public/profile-garden-1500.jpg";
 import portrait from "../public/profile-640.jpeg";
 import ContactForm from "./ContactForm";
@@ -8,10 +10,7 @@ import ProjectVisual from "./ProjectVisual";
 
 const drawers = ["Index", "Case files", "Work log", "Field notes", "Personal", "Contact"] as const;
 
-const projects = [
-  { code: "CF–001", name: "PF2e Equipment Tracker", label: "Pathfinder planning", description: "A complete equipment-planning workflow for one-shot characters, built around availability, selections, and a finite pile of gold.", evidence: ["Foundry VTT data", "Fast filtering", "Custom drag-and-drop", "Portable saves"], url: "https://pf2e-equipment.com", urlLabel: "pf2e-equipment.com", variant: "equipment" as const },
-  { code: "CF–002", name: "HST Designer", label: "Quilt composition", description: "A visual canvas for designing half-square triangle quilts in your own colors before cutting into the fabric.", evidence: ["Direct manipulation", "Custom palettes", "Undo and redo", "Shareable saves"], url: "https://half-square-triangle.com", urlLabel: "half-square-triangle.com", variant: "quilt" as const },
-];
+const drawerHashes = ["", "work", "career", "practice", "about", "contact"] as const;
 
 function IndexFolder({ openNext }: { openNext: () => void }) {
   return <section className="archive-folder archive-folder--index" aria-labelledby="archive-title">
@@ -24,12 +23,12 @@ function IndexFolder({ openNext }: { openNext: () => void }) {
 
 function CaseFilesFolder() {
   const [activeProject, setActiveProject] = useState(0);
-  const project = projects[activeProject];
+  const project = portfolioProjects[activeProject];
   return <section className="archive-folder archive-folder--cases" aria-labelledby="archive-cases-title">
     <div className="archive-folder__tab">B–14 / Built work</div>
     <header className="archive-section-heading"><p>Selected evidence</p><h2 id="archive-cases-title">Case files</h2><span>Two useful things built from an itch.</span></header>
-    <div className="archive-case-tabs" role="tablist" aria-label="Project files">{projects.map((item, index) => <button type="button" role="tab" aria-selected={activeProject === index} className={activeProject === index ? "active" : ""} onClick={() => setActiveProject(index)} key={item.code}><span>{item.code}</span><strong>{item.name}</strong><small>{item.label}</small></button>)}</div>
-    <article className="archive-case-sheet" key={project.code}><div className="archive-case-copy"><div className="archive-punched-row" aria-hidden="true"><i /><i /><i /></div><p>{project.code} / Designed &amp; shipped</p><h3>{project.name}</h3><strong>{project.description}</strong><ul>{project.evidence.map((item) => <li key={item}>{item}</li>)}</ul><a href={project.url} target="_blank" rel="noreferrer">Open {project.urlLabel} ↗</a></div><figure><ProjectVisual variant={project.variant} /><figcaption>FIG. {activeProject + 1} / INTERFACE STUDY</figcaption></figure></article>
+    <div className="archive-case-tabs" role="tablist" aria-label="Project files">{portfolioProjects.map((item, index) => <button id={`archive-project-tab-${index}`} type="button" role="tab" aria-controls="archive-project-panel" aria-selected={activeProject === index} tabIndex={activeProject === index ? 0 : -1} className={activeProject === index ? "active" : ""} onClick={() => setActiveProject(index)} onKeyDown={(event) => handleTabKey(event, index, portfolioProjects.length, setActiveProject)} key={item.code}><span>{item.code}</span><strong>{item.name}</strong><small>{item.label}</small></button>)}</div>
+    <article className="archive-case-sheet" id="archive-project-panel" role="tabpanel" aria-labelledby={`archive-project-tab-${activeProject}`} key={project.code}><div className="archive-case-copy"><div className="archive-punched-row" aria-hidden="true"><i /><i /><i /></div><p>{project.code} / Designed &amp; shipped</p><h3>{project.name}</h3><strong>{project.summary}</strong><ul>{project.evidence.map((item) => <li key={item}>{item}</li>)}</ul><a href={project.url} target="_blank" rel="noreferrer">Open {project.displayUrl} ↗</a></div><figure><ProjectVisual variant={project.visual} /><figcaption>FIG. {activeProject + 1} / INTERFACE STUDY</figcaption></figure></article>
   </section>;
 }
 
@@ -57,31 +56,43 @@ function PersonalFolder() {
   return <section className="archive-folder archive-folder--personal" aria-labelledby="archive-personal-title">
     <div className="archive-folder__tab">E–03 / Off duty</div>
     <figure><img src={gardenPortrait} alt="Danny Stone standing in a garden" width="999" height="1500" /><figcaption>PERSONAL ARCHIVE / OFF DUTY</figcaption></figure>
-    <div className="archive-personal-copy"><p>Beyond the keyboard</p><h2 id="archive-personal-title">A whole person ships better work.</h2><span>I play music, collect LEGO, read fantasy, play Pathfinder and video games, re-watch sitcoms, and share a home with three dogs named Tucker, Rocco, and Benny.</span><div className="archive-personal-labels"><i>Music</i><i>LEGO</i><i>Fantasy</i><i>Pathfinder</i><i>Three dogs</i></div></div>
-    <blockquote>“Curiosity travels well between hobbies and systems.”</blockquote>
+    <div className="archive-personal-copy"><p>{personalProfile.eyebrow}</p><h2 id="archive-personal-title">{personalProfile.heading}</h2><span>{personalProfile.body}</span></div>
   </section>;
 }
 
 function ContactFolder() {
   return <section className="archive-folder archive-folder--contact" aria-labelledby="archive-contact-title">
     <div className="archive-folder__tab">F–01 / Correspondence</div>
-    <header><p>Open correspondence</p><h2 id="archive-contact-title">Send a note.</h2><span>An interesting role, a stubborn engineering problem, or a question about my work—I’d be glad to hear it.</span><nav><a href="https://github.com/dallinstone" target="_blank" rel="me noreferrer">GitHub ↗</a><a href="https://www.linkedin.com/in/dallinstone" target="_blank" rel="me noreferrer">LinkedIn ↗</a></nav></header>
+    <header><p>Open correspondence</p><h2 id="archive-contact-title">Send a note.</h2><span>{contactInvitation.body}</span><nav><a href="https://github.com/dallinstone" target="_blank" rel="me noreferrer">GitHub ↗</a><a href="https://www.linkedin.com/in/dallinstone" target="_blank" rel="me noreferrer">LinkedIn ↗</a></nav></header>
     <div className="archive-contact-sheet"><span className="archive-contact-sheet__label">FORM DS–C1 / PLEASE TYPE CLEARLY</span><ContactForm className="archive-contact-form" /></div>
     <aside><span>ROUTE TO</span><strong>Danny Stone</strong><small>Personal reply<br />Direct correspondence</small></aside>
   </section>;
 }
 
 export default function TactileArchivePortfolio() {
-  const [activeDrawer, setActiveDrawer] = useState(0);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const requestedDrawer = drawerHashes.indexOf(location.hash.slice(1) as typeof drawerHashes[number]);
+  const [activeDrawer, setActiveDrawer] = useState(requestedDrawer < 0 ? 0 : requestedDrawer);
   const pointerStart = useRef<number | null>(null);
-  const folderContent: ReactNode[] = [<IndexFolder openNext={() => setActiveDrawer(1)} />, <CaseFilesFolder />, <WorkLogFolder />, <FieldNotesFolder />, <PersonalFolder />, <ContactFolder />];
-  const moveDrawer = (direction: number) => setActiveDrawer((current) => Math.max(0, Math.min(drawers.length - 1, current + direction)));
+  const selectDrawer = (index: number) => {
+    const next = Math.max(0, Math.min(drawers.length - 1, index));
+    setActiveDrawer(next);
+    navigate(`/?version=05${drawerHashes[next] ? `#${drawerHashes[next]}` : ""}`, { replace: true });
+  };
+  const folderContent: ReactNode[] = [<IndexFolder openNext={() => selectDrawer(1)} />, <CaseFilesFolder />, <WorkLogFolder />, <FieldNotesFolder />, <PersonalFolder />, <ContactFolder />];
+  const moveDrawer = (direction: number) => selectDrawer(activeDrawer + direction);
   const finishDrag = (event: PointerEvent<HTMLDivElement>) => { if (pointerStart.current === null) return; const distance = event.clientX - pointerStart.current; if (Math.abs(distance) > 55) moveDrawer(distance < 0 ? 1 : -1); pointerStart.current = null; };
 
-  return <article className="tactile-archive" onKeyDown={(event) => { if (event.key === "ArrowRight") moveDrawer(1); if (event.key === "ArrowLeft") moveDrawer(-1); }}>
+  useEffect(() => {
+    const next = drawerHashes.indexOf(location.hash.slice(1) as typeof drawerHashes[number]);
+    setActiveDrawer(next < 0 ? 0 : next);
+  }, [location.hash]);
+
+  return <article className="tactile-archive">
     <a className="skip-link" href="#archive-current-folder">Skip to current folder</a>
     <header className="archive-header"><button type="button" className="archive-mark" onClick={() => setActiveDrawer(0)} aria-label="Open archive index"><span>DS</span><strong>Tactile Technical Archive</strong></button><p>Application systems · Data paths · People</p><Link to="/resume?version=05">Résumé <span aria-hidden="true">↗</span></Link></header>
-    <div className="archive-desk"><nav className="archive-drawers" aria-label="Archive drawers">{drawers.map((drawer, index) => <button type="button" className={activeDrawer === index ? "active" : ""} aria-current={activeDrawer === index ? "page" : undefined} onClick={() => setActiveDrawer(index)} key={drawer}><span>0{index + 1}</span><strong>{drawer}</strong></button>)}</nav><div className="archive-stage" id="archive-current-folder" tabIndex={0} onPointerDown={(event) => { if ((event.target as HTMLElement).closest("button, a, input, textarea, select")) return; pointerStart.current = event.clientX; event.currentTarget.setPointerCapture(event.pointerId); }} onPointerUp={finishDrag}><div className="archive-folder-motion" key={activeDrawer}>{folderContent[activeDrawer]}</div></div></div>
-    <footer className="archive-footer"><span>DS–ARCHIVE / 05</span><span>Pull a tab · drag a file · use ← →</span><span>0{activeDrawer + 1} / 06 · © {new Date().getFullYear()}</span></footer>
+    <div className="archive-desk"><nav className="archive-drawers" aria-label="Archive drawers">{drawers.map((drawer, index) => <button type="button" className={activeDrawer === index ? "active" : ""} aria-current={activeDrawer === index ? "page" : undefined} onClick={() => selectDrawer(index)} key={drawer}><span>0{index + 1}</span><strong>{drawer}</strong></button>)}</nav><div className="archive-stage" id="archive-current-folder" tabIndex={0} onKeyDown={(event) => { if ((event.target as HTMLElement).closest("button, a, input, textarea, select")) return; if (event.key === "ArrowRight") { event.preventDefault(); moveDrawer(1); } if (event.key === "ArrowLeft") { event.preventDefault(); moveDrawer(-1); } }} onPointerDown={(event) => { if ((event.target as HTMLElement).closest("button, a, input, textarea, select")) return; pointerStart.current = event.clientX; event.currentTarget.setPointerCapture(event.pointerId); }} onPointerUp={finishDrag}><div className="archive-folder-motion" key={activeDrawer}>{folderContent[activeDrawer]}</div></div></div>
+    <footer className="archive-footer"><span>DS–ARCHIVE / 05</span><span>Choose a tab · swipe the file · use ← →</span><span>0{activeDrawer + 1} / 06 · © {new Date().getFullYear()}</span></footer>
   </article>;
 }

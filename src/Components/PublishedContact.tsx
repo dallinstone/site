@@ -1,45 +1,9 @@
-import emailjs from "@emailjs/browser";
-import { FormEvent, useState } from "react";
+import useContactForm from "../Features/useContactForm";
+import { contactInvitation } from "../Features/portfolioContent";
 import PageMeta from "./PageMeta";
 
-type SubmitState = "idle" | "sending" | "success" | "error";
-
 export default function Contact() {
-  const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-  const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-  const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-  const isConfigured = Boolean(serviceId && templateId && publicKey);
-  const [submitState, setSubmitState] = useState<SubmitState>(isConfigured ? "idle" : "error");
-  const [statusMessage, setStatusMessage] = useState(
-    isConfigured ? "" : "The form is temporarily unavailable. Please reach me through LinkedIn instead.",
-  );
-
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const form = event.currentTarget;
-    const formData = new FormData(form);
-
-    if (formData.get("website")) return;
-
-    if (!serviceId || !templateId || !publicKey) {
-      setSubmitState("error");
-      setStatusMessage("The form is temporarily unavailable. Please reach me through LinkedIn instead.");
-      return;
-    }
-
-    setSubmitState("sending");
-    setStatusMessage("Sending your message…");
-
-    try {
-      await emailjs.sendForm(serviceId, templateId, form, { publicKey });
-      form.reset();
-      setSubmitState("success");
-      setStatusMessage("Thanks—your message has been sent successfully.");
-    } catch {
-      setSubmitState("error");
-      setStatusMessage("Something went wrong while sending. Please try again or contact me through LinkedIn.");
-    }
-  };
+  const { isConfigured, message: statusMessage, state: submitState, submit: handleSubmit } = useContactForm();
 
   return (
     <div className="contact-page page-shell">
@@ -48,10 +12,7 @@ export default function Contact() {
       <header className="page-intro contact-intro">
         <p className="eyebrow">Contact</p>
         <h1>Send me a note.</h1>
-        <p>
-          If you want to talk about my experience, a stubborn engineering problem,
-          or a role that might fit, I’d be glad to hear from you.
-        </p>
+        <p>{contactInvitation.body}</p>
         <a className="text-link" href="https://www.linkedin.com/in/dallinstone" target="_blank" rel="me noreferrer">
           Prefer LinkedIn? Visit my profile <span aria-hidden="true">↗</span>
           <span className="sr-only"> (opens in a new tab)</span>

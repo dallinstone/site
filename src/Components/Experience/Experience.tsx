@@ -5,6 +5,7 @@ import { empItems } from "../../Features/Collections/EmploymentItems";
 import PageMeta from "../PageMeta";
 import Employer from "./Employer";
 import { AtlasResume, StudioResume, WorkspaceResume } from "./ResumeVariants";
+import { resumeSectionFromHash } from "./ResumeVariants";
 import TactileArchiveResume from "./TactileArchiveResume";
 import { coreCapabilities, resumeHighlights, supportingGroups } from "./resumeData";
 import VersionPicker, { siteVersions, SiteVersion } from "../VersionPicker";
@@ -19,14 +20,15 @@ export default function Experience() {
   const navigate = useNavigate();
   const requestedVersion = new URLSearchParams(location.search).get("version");
   const switchVersion = (version: SiteVersion) => {
-    const destinations: Record<SiteVersion, string> = { "01": "/resume?version=01", "02": "/?version=02#career", "03": "/?version=03#career", "04": "/resume?version=04", "05": "/resume?version=05" };
-    navigate(destinations[version]);
+    const section = resumeSectionFromHash(location.hash.slice(1));
+    navigate(`/resume?version=${version}${section === "profile" ? "" : `#${section}`}`);
   };
+  if (!requestedVersion) return <Navigate to="/resume?version=04" replace />;
   if (requestedVersion === "02") return <div className="version-host version-host--02"><VersionPicker version="02" onSelect={switchVersion} /><PageMeta route="/resume" /><WorkspaceResume /></div>;
   if (requestedVersion === "03") return <div className="version-host version-host--03"><VersionPicker version="03" onSelect={switchVersion} /><PageMeta route="/resume" /><AtlasResume /></div>;
   if (requestedVersion === "04") return <div className="version-host version-host--04"><VersionPicker version="04" onSelect={switchVersion} /><PageMeta route="/resume" /><StudioResume /></div>;
   if (requestedVersion === "05") return <div className="version-host version-host--05"><VersionPicker version="05" onSelect={switchVersion} /><PageMeta route="/resume" /><TactileArchiveResume /></div>;
-  if (requestedVersion && !siteVersions.includes(requestedVersion as SiteVersion)) return <Navigate to="/resume?version=04" replace />;
+  if (!siteVersions.includes(requestedVersion as SiteVersion)) return <Navigate to="/resume?version=04" replace />;
 
   return (
     <div className="version-host version-host--01">
@@ -62,7 +64,7 @@ export default function Experience() {
         </div>
       </header>
 
-      <section className="resume-summary" aria-labelledby="summary-title">
+      <section className="resume-summary" id="profile" aria-labelledby="summary-title">
         <h2 id="summary-title">The short version</h2>
         <div className="resume-summary__content">
           <p>I help teams make good decisions about complex, data-heavy business software.</p>
@@ -70,7 +72,7 @@ export default function Experience() {
         </div>
       </section>
 
-      <section className="skills-section" aria-labelledby="skills-title">
+      <section className="skills-section" id="capabilities" aria-labelledby="skills-title">
         <div className="section-heading">
           <p className="eyebrow">What I do</p>
           <h2 id="skills-title">The useful overlap</h2>
@@ -98,7 +100,7 @@ export default function Experience() {
         </div>
       </section>
 
-      <section className="work-section" aria-labelledby="work-title">
+      <section className="work-section" id="experience" aria-labelledby="work-title">
         <div className="section-heading">
           <p className="eyebrow">Career history</p>
           <h2 id="work-title">Work experience</h2>
@@ -116,7 +118,7 @@ export default function Experience() {
         </div>
       </section>
 
-      <section className="education-section" aria-labelledby="education-title">
+      <section className="education-section" id="education" aria-labelledby="education-title">
         <div className="section-heading">
           <p className="eyebrow">Academic foundation</p>
           <h2 id="education-title">Education</h2>

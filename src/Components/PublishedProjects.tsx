@@ -1,46 +1,6 @@
 import PageMeta from "./PageMeta";
 import ProjectVisual from "./ProjectVisual";
-
-const projects = [
-  {
-    number: "01",
-    id: "pf2e-equipment-tracker",
-    name: "PF2e Equipment Tracker",
-    category: "Pathfinder 2e planning tools",
-    url: "https://pf2e-equipment.com",
-    displayUrl: "pf2e-equipment.com",
-    visual: "equipment" as const,
-    description:
-      "A data-driven toolkit that helps Pathfinder 2e players plan equipment around character level and available gold. Users can filter and select affordable items, track their remaining budget, manage equipped gear, and save, load, import, or export their selections. The site also includes an ancestry search tool with flexible filters.",
-    tags: ["React", "Vite", "Data-rich UI", "Filtering & state", "Responsive design"],
-    problem:
-      "Other Pathfinder character and item builders did not quite fit how I prepare characters for one-shots. I wanted one place to track which items were available at each level, what I had selected, and how much gold I had spent.",
-    engineering:
-      "Drag and drop resisted the existing libraries I tried, so I worked through a custom approach. I also sourced the complete item corpus from Foundry VTT, then wrote a Python transformation script to turn it into JSON the React application could use.",
-    result:
-      "A deployed toolkit that brings equipment availability, selections, and character budgets into one repeatable planning workflow for one-shot preparation.",
-  },
-  {
-    number: "02",
-    id: "hst-designer",
-    name: "HST Designer",
-    category: "Half-square triangle quilt design",
-    url: "https://half-square-triangle.com",
-    displayUrl: "half-square-triangle.com",
-    visual: "quilt" as const,
-    description:
-      "A visual workspace for designing half-square triangle quilts. The React interface supports drag-and-drop composition, custom color palettes, rotation and flipping, undo and redo, configurable quilt dimensions, and saved or shareable patterns backed by Firebase.",
-    tags: ["React", "Vite", "Firebase", "Drag & drop", "Interactive canvas"],
-    problem:
-      "I had trouble visualizing quilt patterns in colors other than the creator’s examples. I built HST Designer so I could experiment with palettes and layouts before committing fabric to a pattern.",
-    engineering:
-      "The biggest new challenge was integrating Firebase’s document-oriented NoSQL database and Google sign-in so users could save designs to an account. That complements the interactive canvas, palette state, transformations, and undo and redo tools.",
-    result:
-      "A deployed visual workspace where quilt layouts can be explored, saved, and shared before fabric is committed to a pattern.",
-    next:
-      "I see room to grow HST Designer beyond a personal planning tool and explore a viable product model in a future release.",
-  },
-];
+import { portfolioProjects } from "../Features/portfolioContent";
 
 export default function Projects() {
   return (
@@ -48,8 +8,8 @@ export default function Projects() {
       <PageMeta route="/" />
 
       <header className="page-intro projects-intro">
-        <p className="eyebrow">Two side projects</p>
-        <h1>Two problems I couldn’t leave alone.</h1>
+        <p className="eyebrow">Side projects</p>
+        <h1>Problems I couldn’t leave alone.</h1>
         <p>
           One started with a Pathfinder one-shot. The other started with a quilt.
           Both became real, deployed products because I couldn’t find the tool I wanted.
@@ -57,7 +17,7 @@ export default function Projects() {
       </header>
 
       <section className="projects-list" aria-label="Selected personal projects">
-        {projects.map((project) => (
+        {portfolioProjects.map((project) => (
           <article className="project-card" id={project.id} key={project.name} tabIndex={-1}>
             <aside className="project-card__aside">
               <span className="project-card__number">{project.number}</span>
@@ -109,7 +69,7 @@ export default function Projects() {
       <section className="project-process" aria-labelledby="project-process-title">
         <div className="section-heading">
           <p className="eyebrow">A note on the work</p>
-          <h2 id="project-process-title">Two small products, owned end to end.</h2>
+          <h2 id="project-process-title">Built and owned end to end.</h2>
         </div>
         <div className="project-process__grid">
           <article>

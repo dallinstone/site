@@ -1,23 +1,9 @@
 import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { personalProfile, portfolioProjects } from "../Features/portfolioContent";
 import photoLarge from "../public/profile-1200.jpeg";
 import photoSmall from "../public/profile-640.jpeg";
 import PageMeta from "./PageMeta";
-
-const featuredProjects = [
-  {
-    name: "PF2e Equipment Tracker",
-    category: "Pathfinder 2e / React",
-    text: "A character-equipment planner built because the existing tools didn’t fit how I prepare for one-shots.",
-    path: "/?version=01&page=projects#pf2e-equipment-tracker",
-  },
-  {
-    name: "HST Designer",
-    category: "Half-square triangle quilts / React + Firebase",
-    text: "A visual workspace for designing half-square triangle quilts in your own colors before cutting the fabric.",
-    path: "/?version=01&page=projects#hst-designer",
-  },
-];
 
 const coreStrengths = [
   {
@@ -163,13 +149,13 @@ export default function HomePage() {
             <Link className="text-link" to="/?version=01&page=projects">The longer version <span aria-hidden="true">→</span></Link>
           </div>
           <div className="home-projects__grid">
-            {featuredProjects.map((project, index) => (
-              <Link className="home-project-card" to={project.path} key={project.name}>
+            {portfolioProjects.map((project, index) => (
+              <Link className="home-project-card" to={`/?version=01&page=projects#${project.id}`} key={project.name}>
                 <span className="home-project-card__number" aria-hidden="true">0{index + 1}</span>
                 <span className="home-project-card__text">
-                  <span>{project.category}</span>
+                  <span>{project.compactCategory}</span>
                   <strong>{project.name}</strong>
-                  <small>{project.text}</small>
+                  <small>{project.summary}</small>
                 </span>
                 <span className="home-project-card__arrow" aria-hidden="true">↗</span>
               </Link>
@@ -181,14 +167,11 @@ export default function HomePage() {
       <div className="home-intro-scene">
         <section className="home-intro" aria-labelledby="beyond-code-title">
           <div>
-            <p className="eyebrow">The non-work version</p>
-            <h2 id="beyond-code-title">Music, games, bricks, books, dogs.</h2>
+              <p className="eyebrow">{personalProfile.eyebrow}</p>
+              <h2 id="beyond-code-title">{personalProfile.heading}</h2>
           </div>
           <div className="home-intro__copy">
-            <p>
-              I play music, collect Lego, read fantasy, play Pathfinder and video games,
-              re-watch sitcoms, and share a home with three dogs named Tucker, Rocco, and Benny.
-            </p>
+            <p>{personalProfile.body}</p>
             <Link className="text-link" to="/?version=01&page=about">A little more about me <span aria-hidden="true">→</span></Link>
           </div>
         </section>

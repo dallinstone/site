@@ -1,7 +1,8 @@
-import { ReactNode, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { KeyboardEvent, ReactNode, useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { eduItems } from "../Features/Collections/EduItems";
 import { empItems } from "../Features/Collections/EmploymentItems";
+import { contactInvitation, personalProfile, portfolioProjects } from "../Features/portfolioContent";
 import portrait from "../public/profile-1200.jpeg";
 import gardenPortrait from "../public/profile-garden-1500.jpg";
 import ContactForm from "./ContactForm";
@@ -18,12 +19,14 @@ const atlasNodes: Array<{ id: AtlasView; number: string; label: string }> = [
   { id: "contact", number: "05", label: "Contact" },
 ];
 
+const viewHashes: Record<AtlasView, string> = { work: "work", career: "career", method: "practice", about: "about", contact: "contact" };
+const viewFromHash = (hash: string): AtlasView | null => hash === "practice" ? "method" : atlasNodes.some((node) => node.id === hash) ? hash as AtlasView : null;
+
 function WorkSheet() {
   return (
     <section className="atlas-sheet__work" aria-labelledby="atlas-work-title">
       <header><p>Things I wanted to exist</p><h2 id="atlas-work-title">Selected work</h2></header>
-      <article><div><span>01 / Pathfinder planning</span><h3>PF2e Equipment Tracker</h3><p>A data-driven equipment planner built around availability, budget, and a complete one-shot workflow.</p><a href="https://pf2e-equipment.com" target="_blank" rel="noreferrer">Open project ↗</a></div><figure><ProjectVisual variant="equipment" /></figure></article>
-      <article><div><span>02 / Half-square triangle quilts</span><h3>HST Designer</h3><p>A visual canvas for designing half-square triangle quilts in your own colors before cutting into the fabric.</p><a href="https://half-square-triangle.com" target="_blank" rel="noreferrer">Open project ↗</a></div><figure><ProjectVisual variant="quilt" /></figure></article>
+      {portfolioProjects.map((project) => <article key={project.id}><div><span>{project.number} / {project.label}</span><h3>{project.name}</h3><p>{project.summary}</p><a href={project.url} target="_blank" rel="noreferrer">Open project ↗</a></div><figure><ProjectVisual variant={project.visual} /></figure></article>)}
     </section>
   );
 }
@@ -53,7 +56,7 @@ function AboutSheet() {
   return (
     <section className="atlas-sheet__about" aria-labelledby="atlas-about-title">
       <img src={gardenPortrait} alt="Danny Stone standing in a garden" width="999" height="1500" />
-      <div><p>Beyond the keyboard</p><h2 id="atlas-about-title">A whole person ships better work.</h2><span>I play music, collect LEGO, read fantasy, play Pathfinder and video games, re-watch sitcoms, and share a home with three dogs named Tucker, Rocco, and Benny.</span></div>
+      <div><p>{personalProfile.eyebrow}</p><h2 id="atlas-about-title">{personalProfile.heading}</h2><span>{personalProfile.body}</span></div>
     </section>
   );
 }
@@ -61,7 +64,7 @@ function AboutSheet() {
 function ContactSheet() {
   return (
     <section className="atlas-sheet__contact" aria-labelledby="atlas-contact-title">
-      <header><p>Contact Danny</p><h2 id="atlas-contact-title">Let’s talk.</h2><span>An interesting role, a stubborn engineering problem, or a question about my work—I’d be glad to hear it.</span></header>
+      <header><p>Contact Danny</p><h2 id="atlas-contact-title">Let’s talk.</h2><span>{contactInvitation.body}</span></header>
       <ContactForm className="atlas-contact-form console-contact__form" />
     </section>
   );
@@ -73,31 +76,57 @@ const sheets: Record<AtlasView, ReactNode> = {
 
 export default function MonographPortfolio() {
   const location = useLocation();
-  const initialView = location.hash.slice(1) as AtlasView;
-  const [activeView, setActiveView] = useState<AtlasView | null>(atlasNodes.some((node) => node.id === initialView) ? initialView : null);
+  const navigate = useNavigate();
+  const [activeView, setActiveView] = useState<AtlasView | null>(() => viewFromHash(location.hash.slice(1)));
+  const sheetRef = useRef<HTMLElement>(null);
+  const triggerRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    const next = location.hash.slice(1) as AtlasView;
-    setActiveView(atlasNodes.some((node) => node.id === next) ? next : null);
+    setActiveView(viewFromHash(location.hash.slice(1)));
   }, [location.hash]);
+
+  useEffect(() => {
+    if (activeView) sheetRef.current?.querySelector<HTMLButtonElement>(".atlas-sheet__close")?.focus();
+    else if (triggerRef.current) window.requestAnimationFrame(() => triggerRef.current?.focus());
+  }, [activeView]);
+
+  const openView = (view: AtlasView, trigger: HTMLElement) => {
+    triggerRef.current = trigger;
+    navigate(`/?version=03#${viewHashes[view]}`);
+  };
+
+  const closeView = () => {
+    navigate("/?version=03", { replace: true });
+  };
+
+  const handleSheetKeyDown = (event: KeyboardEvent<HTMLElement>) => {
+    if (event.key === "Escape") { event.preventDefault(); closeView(); return; }
+    if (event.key !== "Tab") return;
+    const focusable = Array.from(event.currentTarget.querySelectorAll<HTMLElement>('button:not([disabled]), a[href], input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'));
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+    if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+  };
 
   return (
     <article className={`portfolio-atlas${activeView ? " portfolio-atlas--open" : ""}`}>
-      <header className="atlas-header"><button type="button" onClick={() => setActiveView(null)}><strong>DS</strong><span>Danny Stone</span></button><p>Application · Data · People</p><a href="#atlas-career-title" onClick={(event) => { event.preventDefault(); setActiveView("career"); }}>Career dossier ↘</a></header>
+      <header className="atlas-header" inert={activeView ? true : undefined}><button type="button" onClick={closeView}><strong>DS</strong><span>Danny Stone</span></button><p>Application · Data · People</p><a href="/resume?version=03">Career dossier ↘</a></header>
 
-      <section className="atlas-map">
+      <section className="atlas-map" inert={activeView ? true : undefined}>
         <div className="atlas-map__grid" aria-hidden="true" />
         <p className="atlas-map__kicker">Senior software engineer / Portfolio 03</p>
         <h1><span>Danny</span><span>Stone</span></h1>
         <figure><img src={portrait} alt="Danny Stone smiling on a beach" width="1200" height="1460" /></figure>
         <p className="atlas-map__statement">I untangle complex business software across applications, databases, integrations, and requirements.</p>
         <nav aria-label="Explore Danny Stone’s portfolio">
-          {atlasNodes.map((node) => <button className={`atlas-node atlas-node--${node.id}`} type="button" onClick={() => setActiveView(node.id)} key={node.id}><span>{node.number}</span><strong>{node.label}</strong></button>)}
+          {atlasNodes.map((node) => <button className={`atlas-node atlas-node--${node.id}`} type="button" onClick={(event) => openView(node.id, event.currentTarget)} key={node.id}><span>{node.number}</span><strong>{node.label}</strong></button>)}
         </nav>
         <p className="atlas-map__hint">Choose a point to explore</p>
       </section>
 
-      {activeView && <aside className={`atlas-sheet atlas-sheet--${activeView}`} aria-label={`${atlasNodes.find((node) => node.id === activeView)?.label} panel`}><button className="atlas-sheet__close" type="button" onClick={() => setActiveView(null)} aria-label="Close panel">Close ×</button>{sheets[activeView]}</aside>}
+      {activeView && <aside ref={sheetRef} className={`atlas-sheet atlas-sheet--${activeView}`} role="dialog" aria-modal="true" aria-label={`${atlasNodes.find((node) => node.id === activeView)?.label} panel`} onKeyDown={handleSheetKeyDown}><button className="atlas-sheet__close" type="button" onClick={closeView} aria-label="Close panel">Close ×</button>{sheets[activeView]}</aside>}
 
       <footer className="atlas-footer"><span>Built by Danny Stone</span><span>03 / Portfolio</span><span>© {new Date().getFullYear()}</span></footer>
     </article>

@@ -24,7 +24,7 @@ export default function RouteError() {
         <button className="button button--primary" type="button" onClick={() => window.location.reload()}>
           Reload page
         </button>
-        <Link className="button button--secondary" to="/">Return home</Link>
+        <Link className="button button--secondary" to="/?version=04">Return home</Link>
       </div>
     </section>
   );

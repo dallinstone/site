@@ -1,5 +1,6 @@
 import { ReactNode, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { useLocation } from "react-router-dom";
 import publishedStyles from "../published.css?inline";
 
 type PublishedSnapshotProps = {
@@ -38,6 +39,7 @@ export function usePublishedTheme() {
  * A shadow root prevents styles for versions 02–05 from changing it.
  */
 export default function PublishedSnapshot({ children, theme }: PublishedSnapshotProps) {
+  const location = useLocation();
   const hostRef = useRef<HTMLDivElement>(null);
   const [shadowRoot, setShadowRoot] = useState<ShadowRoot | null>(null);
 
@@ -46,6 +48,18 @@ export default function PublishedSnapshot({ children, theme }: PublishedSnapshot
     if (!host) return;
     setShadowRoot(host.shadowRoot ?? host.attachShadow({ mode: "open" }));
   }, []);
+
+  useEffect(() => {
+    if (!shadowRoot || !location.hash) return;
+    const targetId = decodeURIComponent(location.hash.slice(1));
+    const timeoutId = window.setTimeout(() => {
+      const target = shadowRoot.getElementById(targetId) as HTMLElement | null;
+      if (!target) return;
+      target.scrollIntoView({ behavior: "auto", block: "start" });
+      target.focus({ preventScroll: true });
+    }, 0);
+    return () => window.clearTimeout(timeoutId);
+  }, [children, location.hash, shadowRoot]);
 
   return (
     <div className="published-snapshot-host" ref={hostRef}>
