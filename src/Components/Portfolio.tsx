@@ -1,14 +1,17 @@
 import { ReactNode, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { eduItems } from "../Features/Collections/EduItems";
 import { empItems } from "../Features/Collections/EmploymentItems";
 import portrait from "../public/profile-garden-1500.jpg";
 import ContactForm from "./ContactForm";
 import MonographPortfolio from "./MonographPortfolio";
-import OddityPortfolio from "./OddityPortfolio";
 import PageMeta from "./PageMeta";
 import ProjectVisual from "./ProjectVisual";
 import PublishedPortfolio from "./PublishedPortfolio";
 import StudioReelPortfolio from "./StudioReelPortfolio";
+import TactileArchivePortfolio from "./TactileArchivePortfolio";
+import { coreCapabilities, supportingGroups } from "./Experience/resumeData";
+import VersionPicker, { siteVersions, SiteVersion } from "./VersionPicker";
 
 type ViewId = "overview" | "work" | "career" | "practice" | "about" | "contact";
 
@@ -84,10 +87,12 @@ function WorkView() {
 function CareerView() {
   return (
     <section className="console-career" aria-labelledby="console-career-title">
-      <header className="console-view-heading"><p>Experience</p><h1 id="console-career-title">The whole system.</h1><Link to="/resume?version=02">Detailed résumé ↗</Link></header>
+      <header className="console-view-heading"><p>Experience / Detailed résumé</p><h1 id="console-career-title">The whole system.</h1><a href="/danny-stone-resume.pdf" download>Download PDF ↓</a></header>
       <div className="console-career__timeline">
-        {empItems.map((role, index) => <article key={role.name}><span>0{index + 1}</span><time>{role.dates}</time><div><h2>{role.name}</h2><strong>{role.title}</strong></div><p>{role.summary}</p></article>)}
+        {empItems.map((role, index) => <article key={role.name}><span>0{index + 1}</span><time>{role.dates}</time><div><h2>{role.name}</h2><strong>{role.title}</strong></div><p>{role.summary}</p><details><summary>Detailed contributions</summary><ul>{role.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}</ul></details></article>)}
       </div>
+      <section className="console-career__capabilities"><header><p>Core capabilities</p><h2>System map</h2></header><div>{coreCapabilities.map((group) => <article key={group.title}><span>{group.number}</span><h3>{group.title}</h3><p>{group.text}</p><small>{group.skills.join(" · ")}</small></article>)}</div>{supportingGroups.map((group) => <p key={group.title}><strong>{group.title}:</strong> {group.skills.join(" · ")}</p>)}</section>
+      <section className="console-career__education"><header><p>Academic foundation</p><h2>Education</h2></header><div>{eduItems.map((education) => <article key={education.school}><time>{education.years}</time><h3>{education.school}</h3><strong>{education.major}</strong>{education.minor && <p>{education.minor}</p>}</article>)}</div></section>
     </section>
   );
 }
@@ -120,7 +125,7 @@ function ContactView() {
     <section className="console-contact" aria-labelledby="console-contact-title">
       <div className="console-contact__intro"><p>Send Danny a note</p><h1 id="console-contact-title">Let’s talk.</h1><span>A stubborn problem, an interesting role, or a question about my work—I’d be glad to hear it.</span></div>
       <ContactForm className="console-contact__form" />
-      <nav><a href="https://www.linkedin.com/in/dallinstone" target="_blank" rel="me noreferrer">LinkedIn <i>↗</i></a><a href="https://github.com/dallinstone" target="_blank" rel="me noreferrer">GitHub <i>↗</i></a><Link to="/resume?version=02">Résumé <i>→</i></Link></nav>
+      <nav><a href="https://www.linkedin.com/in/dallinstone" target="_blank" rel="me noreferrer">LinkedIn <i>↗</i></a><a href="https://github.com/dallinstone" target="_blank" rel="me noreferrer">GitHub <i>↗</i></a><Link to="/?version=02#career">Résumé <i>→</i></Link></nav>
     </section>
   );
 }
@@ -149,7 +154,7 @@ function WorkspacePortfolio() {
   return (
     <article className={`portfolio-console portfolio-console--${activeView}`}>
       <a className="skip-link" href="#console-view">Skip to current view</a>
-      <header className="console-topbar"><button className="console-brand" onClick={() => selectView("overview")}><strong>DS</strong><span>Danny Stone</span></button><p>Application · Data · People</p><Link to="/resume?version=02">Résumé ↗</Link></header>
+      <header className="console-topbar"><button className="console-brand" onClick={() => selectView("overview")}><strong>DS</strong><span>Danny Stone</span></button><p>Application · Data · People</p><Link to="/?version=02#career">Résumé ↓</Link></header>
       <div className="console-body">
         <nav className="console-nav" aria-label="Portfolio views">
           {navItems.map(([id, label], index) => <button className={activeView === id ? "active" : ""} aria-current={activeView === id ? "page" : undefined} onClick={() => selectView(id)} key={id}><span>0{index + 1}</span><strong>{label}</strong></button>)}
@@ -161,9 +166,6 @@ function WorkspacePortfolio() {
     </article>
   );
 }
-
-type SiteVersion = "01" | "02" | "03" | "04" | "05";
-const siteVersions: SiteVersion[] = ["01", "02", "03", "04", "05"];
 
 export default function Portfolio() {
   const location = useLocation();
@@ -178,8 +180,11 @@ export default function Portfolio() {
   useEffect(() => {
     if (requestedVersion && siteVersions.includes(requestedVersion)) {
       setVersion(requestedVersion);
+    } else if (requestedVersion) {
+      setVersion("04");
+      navigate("/?version=04", { replace: true });
     }
-  }, [requestedVersion]);
+  }, [navigate, requestedVersion]);
 
   const selectVersion = (nextVersion: SiteVersion) => {
     setVersion(nextVersion);
@@ -189,12 +194,8 @@ export default function Portfolio() {
   return (
     <div className={`version-host version-host--${version}`}>
       <PageMeta route="/" />
-      <label className="version-switcher">
-        <select aria-label="Choose site version" value={version} onChange={(event) => selectVersion(event.target.value as SiteVersion)}>
-          {siteVersions.map((item) => <option value={item} key={item}>{item}</option>)}
-        </select>
-      </label>
-      {version === "01" ? <PublishedPortfolio /> : version === "02" ? <WorkspacePortfolio /> : version === "03" ? <MonographPortfolio /> : version === "04" ? <StudioReelPortfolio /> : <OddityPortfolio />}
+      <VersionPicker version={version} onSelect={selectVersion} />
+      {version === "01" ? <PublishedPortfolio /> : version === "02" ? <WorkspacePortfolio /> : version === "03" ? <MonographPortfolio /> : version === "04" ? <StudioReelPortfolio /> : <TactileArchivePortfolio />}
     </div>
   );
 }

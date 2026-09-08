@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
-import "../published.css";
 import PublishedAbout from "./PublishedAbout";
 import PublishedContact from "./PublishedContact";
 import PublishedHomePage from "./PublishedHomePage";
 import PublishedProjects from "./PublishedProjects";
+import PublishedFooter from "./PublishedFooter";
+import PublishedSnapshot, { usePublishedTheme } from "./PublishedSnapshot";
 
 type PublishedPage = "home" | "projects" | "about" | "contact";
 
@@ -22,13 +22,13 @@ export default function PublishedPortfolio() {
   const location = useLocation();
   const requestedPage = new URLSearchParams(location.search).get("page") as PublishedPage | null;
   const page = pageLinks.some((item) => item.id === requestedPage) ? requestedPage! : "home";
-  const [isDark, setIsDark] = useState(true);
+  const [publishedTheme, setPublishedTheme] = usePublishedTheme();
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => setIsOpen(false), [page]);
 
   return (
-    <article className="published-site" data-theme={isDark ? "dark" : "light"}>
+    <PublishedSnapshot theme={publishedTheme}>
       <header className="site-header">
         <a className="skip-link" href="#published-main">Skip to main content</a>
         <div className="nav-shell">
@@ -43,8 +43,8 @@ export default function PublishedPortfolio() {
               <Link to="/resume?version=01">Experience</Link>
               {pageLinks.slice(1).map((item) => <Link key={item.id} className={page === item.id ? "active" : undefined} to={pageUrl(item.id)}>{item.label}</Link>)}
             </nav>
-            <button className="theme-toggle" type="button" aria-label={`Switch to ${isDark ? "light" : "dark"} mode`} title={`Switch to ${isDark ? "light" : "dark"} mode`} onClick={() => setIsDark((dark) => !dark)}>
-              <span className="theme-toggle__icon" aria-hidden="true">{isDark ? "☾" : "☀"}</span>
+            <button className="theme-toggle" type="button" aria-label={`Switch to ${publishedTheme === "dark" ? "light" : "dark"} mode`} title={`Switch to ${publishedTheme === "dark" ? "light" : "dark"} mode`} onClick={() => setPublishedTheme((theme) => theme === "dark" ? "light" : "dark")}>
+              <span className="theme-toggle__icon" aria-hidden="true">{publishedTheme === "dark" ? "☾" : "☀"}</span>
             </button>
             <button className="menu-toggle" type="button" aria-controls="published-navigation" aria-expanded={isOpen} onClick={() => setIsOpen((open) => !open)}>
               <span aria-hidden="true">{isOpen ? "Close" : "Menu"}</span>
@@ -61,13 +61,7 @@ export default function PublishedPortfolio() {
         {page === "contact" && <PublishedContact />}
       </div>
 
-      <footer className="site-footer">
-        <div className="footer-shell">
-          <div><p className="footer-name">Danny Stone</p><p>Senior software engineer. Databases, .NET, React, and the people who rely on them.</p></div>
-          <nav aria-label="Social profiles"><span className="footer-social-links"><a className="footer-social-link" href="https://github.com/dallinstone" rel="me" aria-label="Danny Stone on GitHub" title="GitHub"><FaGithub aria-hidden="true" /><span className="sr-only">GitHub</span></a><a className="footer-social-link" href="https://www.linkedin.com/in/dallinstone" rel="me" aria-label="Danny Stone on LinkedIn" title="LinkedIn"><FaLinkedin aria-hidden="true" /><span className="sr-only">LinkedIn</span></a></span></nav>
-          <p className="footer-copyright">© {new Date().getFullYear()} Danny Stone</p>
-        </div>
-      </footer>
-    </article>
+      <PublishedFooter />
+    </PublishedSnapshot>
   );
 }

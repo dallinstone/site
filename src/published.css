@@ -1,4 +1,4 @@
-.published-site { height:100svh; overflow:auto; }
+.published-site { min-height:100svh; }
 
 @scope (.published-site) {
 :scope {
@@ -827,7 +827,7 @@ h1, h2, h3 { font-family: "Arial Black", "Helvetica Neue", Helvetica, sans-serif
 }
 
 @media print {
-  :root { background: white; font-size: 10pt; }
+  :scope { background: white; font-size: 10pt; }
   :scope { background: white; }
   .site-header, .site-footer, .resume-actions { display: none !important; }
   .page-shell { width: 100%; padding: 0; }
@@ -841,4 +841,3 @@ h1, h2, h3 { font-family: "Arial Black", "Helvetica Neue", Helvetica, sans-serif
 }
 
 }
-

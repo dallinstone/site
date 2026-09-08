@@ -1,10 +1,12 @@
-import { ReactNode, useState } from "react";
-import { Link } from "react-router-dom";
+import { ReactNode, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { eduItems } from "../Features/Collections/EduItems";
 import { empItems } from "../Features/Collections/EmploymentItems";
 import portrait from "../public/profile-1200.jpeg";
 import gardenPortrait from "../public/profile-garden-1500.jpg";
 import ContactForm from "./ContactForm";
 import ProjectVisual from "./ProjectVisual";
+import { coreCapabilities, supportingGroups } from "./Experience/resumeData";
 
 type AtlasView = "work" | "career" | "method" | "about" | "contact";
 
@@ -29,8 +31,10 @@ function WorkSheet() {
 function CareerSheet() {
   return (
     <section className="atlas-sheet__career" aria-labelledby="atlas-career-title">
-      <header><p>Experience</p><h2 id="atlas-career-title">Career</h2><Link to="/resume?version=03">Detailed résumé ↗</Link></header>
-      <div>{empItems.map((role, index) => <article key={role.name}><span>0{index + 1}</span><time>{role.dates}</time><div><h3>{role.name}</h3><strong>{role.title}</strong></div><p>{role.summary}</p></article>)}</div>
+      <header><p>Experience / Detailed résumé</p><h2 id="atlas-career-title">Career</h2><a href="/danny-stone-resume.pdf" download>Download PDF ↓</a></header>
+      <div>{empItems.map((role, index) => <article key={role.name}><span>0{index + 1}</span><time>{role.dates}</time><div><h3>{role.name}</h3><strong>{role.title}</strong><p>{role.summary}</p><details><summary>Detailed contributions</summary><ul>{role.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}</ul></details></div></article>)}</div>
+      <section className="atlas-career__capabilities"><header><p>Capabilities</p><h3>Three coordinates</h3></header>{coreCapabilities.map((group) => <article key={group.title}><span>{group.number}</span><div><h4>{group.title}</h4><p>{group.text}</p><small>{group.skills.join(" · ")}</small></div></article>)}{supportingGroups.map((group) => <p key={group.title}><strong>{group.title}:</strong> {group.skills.join(" · ")}</p>)}</section>
+      <section className="atlas-career__education"><header><p>Academic foundation</p><h3>Education</h3></header>{eduItems.map((education) => <article key={education.school}><time>{education.years}</time><div><h4>{education.school}</h4><strong>{education.major}</strong>{education.minor && <p>{education.minor}</p>}</div></article>)}</section>
     </section>
   );
 }
@@ -68,11 +72,18 @@ const sheets: Record<AtlasView, ReactNode> = {
 };
 
 export default function MonographPortfolio() {
-  const [activeView, setActiveView] = useState<AtlasView | null>(null);
+  const location = useLocation();
+  const initialView = location.hash.slice(1) as AtlasView;
+  const [activeView, setActiveView] = useState<AtlasView | null>(atlasNodes.some((node) => node.id === initialView) ? initialView : null);
+
+  useEffect(() => {
+    const next = location.hash.slice(1) as AtlasView;
+    setActiveView(atlasNodes.some((node) => node.id === next) ? next : null);
+  }, [location.hash]);
 
   return (
     <article className={`portfolio-atlas${activeView ? " portfolio-atlas--open" : ""}`}>
-      <header className="atlas-header"><button type="button" onClick={() => setActiveView(null)}><strong>DS</strong><span>Danny Stone</span></button><p>Application · Data · People</p><Link to="/resume?version=03">Résumé ↗</Link></header>
+      <header className="atlas-header"><button type="button" onClick={() => setActiveView(null)}><strong>DS</strong><span>Danny Stone</span></button><p>Application · Data · People</p><a href="#atlas-career-title" onClick={(event) => { event.preventDefault(); setActiveView("career"); }}>Career dossier ↘</a></header>
 
       <section className="atlas-map">
         <div className="atlas-map__grid" aria-hidden="true" />

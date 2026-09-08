@@ -1,57 +1,54 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { eduItems } from "../../Features/Collections/EduItems";
 import { empItems } from "../../Features/Collections/EmploymentItems";
 import PageMeta from "../PageMeta";
 import Employer from "./Employer";
-
-const coreCapabilities = [
-  {
-    number: "01",
-    title: "Database engineering",
-    text: "Designing efficient data paths and tracing performance from the application into SQL Server.",
-    skills: ["SQL Server", "Stored procedures", "Index & query tuning", "Dapper", "Entity Framework Core", "Views, functions & triggers"],
-  },
-  {
-    number: "02",
-    title: "Requirements & communication",
-    text: "Creating shared understanding between the people who use, define, and build the software.",
-    skills: ["Requirements discovery", "Customer communication", "Product owner partnership", "Technical translation", "Stakeholder communication", "Technical mentoring"],
-  },
-  {
-    number: "03",
-    title: "Application systems",
-    text: "Building and modernizing reliable business applications across frontend, API, identity, and service layers.",
-    skills: ["C#", ".NET", "ASP.NET", "REST APIs", "React", "Angular", "TypeScript", "Identity & SSO"],
-  },
-];
-
-const supportingGroups = [
-  { title: "Azure & integrations", skills: ["Microsoft Azure", "Azure Functions", "Azure Service Bus", "Cloud migrations", "Azure Data Factory", "Webhooks"] },
-  { title: "Quality & delivery", skills: ["xUnit", "Moq", "NSubstitute", "Playwright", "SDLC"] },
-];
+import { AtlasResume, StudioResume, WorkspaceResume } from "./ResumeVariants";
+import TactileArchiveResume from "./TactileArchiveResume";
+import { coreCapabilities, resumeHighlights, supportingGroups } from "./resumeData";
+import VersionPicker, { siteVersions, SiteVersion } from "../VersionPicker";
+import PublishedFooter from "../PublishedFooter";
+import PublishedSnapshot, { usePublishedTheme } from "../PublishedSnapshot";
 
 export default function Experience() {
   const [openItem, setOpenItem] = useState<number | null>(0);
+  const [publishedTheme, setPublishedTheme] = usePublishedTheme();
+  const [publishedMenuOpen, setPublishedMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const requestedVersion = new URLSearchParams(location.search).get("version");
-  const version = requestedVersion === "01" ? "published" : requestedVersion === "03" ? "monograph" : requestedVersion === "04" ? "studio" : requestedVersion === "05" ? "oddity" : "workspace";
-  const versionNumber = version === "published" ? "01" : version === "workspace" ? "02" : version === "monograph" ? "03" : version === "studio" ? "04" : "05";
-  const returnPath = version === "published" ? "/?version=01" : version === "workspace" ? "/?version=02#career" : version === "monograph" ? "/?version=03" : version === "studio" ? "/?version=04" : "/?version=05#v5-career";
+  const switchVersion = (version: SiteVersion) => {
+    const destinations: Record<SiteVersion, string> = { "01": "/resume?version=01", "02": "/?version=02#career", "03": "/?version=03#career", "04": "/resume?version=04", "05": "/resume?version=05" };
+    navigate(destinations[version]);
+  };
+  if (requestedVersion === "02") return <div className="version-host version-host--02"><VersionPicker version="02" onSelect={switchVersion} /><PageMeta route="/resume" /><WorkspaceResume /></div>;
+  if (requestedVersion === "03") return <div className="version-host version-host--03"><VersionPicker version="03" onSelect={switchVersion} /><PageMeta route="/resume" /><AtlasResume /></div>;
+  if (requestedVersion === "04") return <div className="version-host version-host--04"><VersionPicker version="04" onSelect={switchVersion} /><PageMeta route="/resume" /><StudioResume /></div>;
+  if (requestedVersion === "05") return <div className="version-host version-host--05"><VersionPicker version="05" onSelect={switchVersion} /><PageMeta route="/resume" /><TactileArchiveResume /></div>;
+  if (requestedVersion && !siteVersions.includes(requestedVersion as SiteVersion)) return <Navigate to="/resume?version=04" replace />;
 
   return (
-    <div className={`resume-immersive resume-immersive--${version}`}>
-      <PageMeta route="/resume" />
-      <header className="resume-immersive__bar">
-        <Link to={returnPath}>← Back to version {versionNumber}</Link>
-        <strong>Danny Stone / Résumé</strong>
-        <a href="/danny-stone-resume.pdf" download>Download PDF ↓</a>
-      </header>
-      <div className="resume-page page-shell">
+    <div className="version-host version-host--01">
+      <VersionPicker version="01" onSelect={switchVersion} />
+      <PublishedSnapshot theme={publishedTheme}>
+        <PageMeta route="/resume" />
+        <header className="site-header">
+          <a className="skip-link" href="#published-main">Skip to main content</a>
+          <div className="nav-shell">
+            <Link className="brand" to="/?version=01" aria-label="Danny Stone, home"><span className="brand__mark" aria-hidden="true">D/S</span><span className="brand__name">Danny Stone</span></Link>
+            <div className="nav-actions">
+              <nav id="published-resume-navigation" className={`primary-nav${publishedMenuOpen ? " primary-nav--open" : ""}`} aria-label="Primary navigation"><Link to="/?version=01">Home</Link><Link className="active" to="/resume?version=01">Experience</Link><Link to="/?version=01&page=projects">Projects</Link><Link to="/?version=01&page=about">About</Link><Link to="/?version=01&page=contact">Contact</Link></nav>
+              <button className="theme-toggle" type="button" aria-label={`Switch to ${publishedTheme === "dark" ? "light" : "dark"} mode`} onClick={() => setPublishedTheme((theme) => theme === "dark" ? "light" : "dark")}><span className="theme-toggle__icon" aria-hidden="true">{publishedTheme === "dark" ? "☾" : "☀"}</span></button>
+              <button className="menu-toggle" type="button" aria-controls="published-resume-navigation" aria-expanded={publishedMenuOpen} onClick={() => setPublishedMenuOpen((open) => !open)}><span aria-hidden="true">{publishedMenuOpen ? "Close" : "Menu"}</span><span className="sr-only">{publishedMenuOpen ? "Close navigation" : "Open navigation"}</span></button>
+            </div>
+          </div>
+        </header>
+        <div className="resume-page page-shell" id="published-main">
 
       <header className="resume-hero">
         <div>
-          <p className="eyebrow">Résumé / Work history</p>
+          <p className="eyebrow">Work history</p>
           <h1>Dallin “Danny” Stone</h1>
           <p className="resume-subtitle">Senior Software Engineer · C#/.NET · React/Angular · TypeScript · SQL Server · Azure</p>
         </div>
@@ -69,11 +66,7 @@ export default function Experience() {
         <h2 id="summary-title">The short version</h2>
         <div className="resume-summary__content">
           <p>I help teams make good decisions about complex, data-heavy business software.</p>
-          <ul className="profile-highlights">
-            <li><strong>Translate the need.</strong> Partner with customers and product owners to clarify business goals and give development teams useful technical direction.</li>
-            <li><strong>Engineer the data path.</strong> Design efficient SQL Server procedures, indexes, queries, and application access patterns.</li>
-            <li><strong>Deliver reliable systems.</strong> Build and modernize C#/.NET applications and Azure integrations while protecting sensitive data.</li>
-          </ul>
+          <ul className="profile-highlights">{resumeHighlights.map((item) => <li key={item.title}><strong>{item.title}</strong> {item.text}</li>)}</ul>
         </div>
       </section>
 
@@ -139,7 +132,9 @@ export default function Experience() {
           ))}
         </div>
       </section>
-      </div>
+        </div>
+        <PublishedFooter />
+      </PublishedSnapshot>
     </div>
   );
 }
