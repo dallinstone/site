@@ -4,7 +4,7 @@ import { eduItems } from "../Features/Collections/EduItems";
 import { empItems } from "../Features/Collections/EmploymentItems";
 import { contactInvitation, personalProfile, portfolioProjects } from "../Features/portfolioContent";
 import { handleTabKey } from "../Features/tabKeyboard";
-import portrait from "../public/profile-garden-1500.jpg";
+import portrait from "../public/profile-garden-3691.webp";
 import ContactForm from "./ContactForm";
 import MonographPortfolio from "./MonographPortfolio";
 import PageMeta from "./PageMeta";
@@ -90,7 +90,7 @@ function PracticeView() {
 function AboutView() {
   return (
     <section className="console-about" aria-labelledby="console-about-title">
-      <img src={portrait} alt="Danny Stone standing in a garden" width="999" height="1500" />
+      <img src={portrait} alt="Danny Stone standing in a garden" width="3691" height="5536" />
       <div><p>{personalProfile.eyebrow}</p><h1 id="console-about-title">{personalProfile.heading}</h1><span>{personalProfile.body}</span></div>
     </section>
   );

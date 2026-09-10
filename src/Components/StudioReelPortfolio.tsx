@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { empItems } from "../Features/Collections/EmploymentItems";
 import { contactInvitation, personalProfile, portfolioProjects } from "../Features/portfolioContent";
 import portrait from "../public/profile-1200.jpeg";
-import gardenPortrait from "../public/profile-garden-1500.jpg";
+import gardenPortrait from "../public/profile-garden-3691.webp";
 import ContactForm from "./ContactForm";
 import ProjectVisual from "./ProjectVisual";
 
@@ -95,7 +95,7 @@ export default function StudioReelPortfolio() {
         </section>
 
         <section className="studio-spread studio-spread--about" aria-labelledby="reel-about-title" aria-hidden={activeSpread !== 5} inert={activeSpread !== 5 ? true : undefined}>
-          <figure><img src={gardenPortrait} alt="Danny Stone standing in a garden" width="999" height="1500" /></figure>
+          <figure><img src={gardenPortrait} alt="Danny Stone standing in a garden" width="3691" height="5536" /></figure>
           <div><p>05 / {personalProfile.eyebrow}</p><h2 id="reel-about-title">{personalProfile.heading}</h2><span>{personalProfile.body}</span></div>
         </section>
 
