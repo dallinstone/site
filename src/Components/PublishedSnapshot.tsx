@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useLocation } from "react-router-dom";
-import publishedStyles from "../published.css?inline";
+import publishedStylesUrl from "../published.css?url";
 
 type PublishedSnapshotProps = {
   children: ReactNode;
@@ -36,7 +36,7 @@ export function usePublishedTheme() {
 
 /**
  * Version 01 is the pre-version portfolio preserved as a real CSS snapshot.
- * A shadow root prevents styles for versions 02–05 from changing it.
+ * A shadow root prevents styles for versions 02–04 from changing it.
  */
 export default function PublishedSnapshot({ children, theme }: PublishedSnapshotProps) {
   const location = useLocation();
@@ -65,7 +65,7 @@ export default function PublishedSnapshot({ children, theme }: PublishedSnapshot
     <div className="published-snapshot-host" ref={hostRef}>
       {shadowRoot && createPortal(
         <>
-          <style>{publishedStyles}</style>
+          <link rel="stylesheet" href={publishedStylesUrl} />
           <article className="published-site" data-theme={theme}>
             {children}
           </article>
