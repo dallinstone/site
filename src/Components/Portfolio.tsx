@@ -11,7 +11,6 @@ import PageMeta from "./PageMeta";
 import ProjectVisual from "./ProjectVisual";
 import PublishedPortfolio from "./PublishedPortfolio";
 import StudioReelPortfolio from "./StudioReelPortfolio";
-import TactileArchivePortfolio from "./TactileArchivePortfolio";
 import { coreCapabilities, supportingGroups } from "./Experience/resumeData";
 import VersionPicker, { siteVersions, SiteVersion } from "./VersionPicker";
 
@@ -180,7 +179,7 @@ export default function Portfolio() {
     <div className={`version-host version-host--${version}`}>
       <PageMeta route="/" />
       <VersionPicker version={version} onSelect={selectVersion} />
-      {version === "01" ? <PublishedPortfolio /> : version === "02" ? <WorkspacePortfolio /> : version === "03" ? <MonographPortfolio /> : version === "04" ? <StudioReelPortfolio /> : <TactileArchivePortfolio />}
+      {version === "01" ? <PublishedPortfolio /> : version === "02" ? <WorkspacePortfolio /> : version === "03" ? <MonographPortfolio /> : <StudioReelPortfolio />}
     </div>
   );
 }

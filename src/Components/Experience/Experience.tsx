@@ -6,7 +6,6 @@ import PageMeta from "../PageMeta";
 import Employer from "./Employer";
 import { AtlasResume, StudioResume, WorkspaceResume } from "./ResumeVariants";
 import { resumeSectionFromHash } from "./ResumeVariants";
-import TactileArchiveResume from "./TactileArchiveResume";
 import { coreCapabilities, resumeHighlights, supportingGroups } from "./resumeData";
 import VersionPicker, { siteVersions, SiteVersion } from "../VersionPicker";
 import PublishedFooter from "../PublishedFooter";
@@ -27,7 +26,6 @@ export default function Experience() {
   if (requestedVersion === "02") return <div className="version-host version-host--02"><VersionPicker version="02" onSelect={switchVersion} /><PageMeta route="/resume" /><WorkspaceResume /></div>;
   if (requestedVersion === "03") return <div className="version-host version-host--03"><VersionPicker version="03" onSelect={switchVersion} /><PageMeta route="/resume" /><AtlasResume /></div>;
   if (requestedVersion === "04") return <div className="version-host version-host--04"><VersionPicker version="04" onSelect={switchVersion} /><PageMeta route="/resume" /><StudioResume /></div>;
-  if (requestedVersion === "05") return <div className="version-host version-host--05"><VersionPicker version="05" onSelect={switchVersion} /><PageMeta route="/resume" /><TactileArchiveResume /></div>;
   if (!siteVersions.includes(requestedVersion as SiteVersion)) return <Navigate to="/resume?version=04" replace />;
 
   return (
