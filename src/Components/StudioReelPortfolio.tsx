@@ -1,4 +1,4 @@
-import { UIEvent, useLayoutEffect, useRef, useState } from "react";
+import { UIEvent, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { empItems } from "../Features/Collections/EmploymentItems";
 import { contactInvitation, personalProfile, portfolioProjects } from "../Features/portfolioContent";
@@ -13,6 +13,7 @@ const spreadHashes = ["", "work", "hst", "career", "practice", "about", "contact
 export default function StudioReelPortfolio() {
   const trackRef = useRef<HTMLDivElement>(null);
   const positioningRef = useRef(true);
+  const settleTimerRef = useRef<number | null>(null);
   const location = useLocation();
   const navigate = useNavigate();
   const requestedSpread = spreadHashes.indexOf(location.hash.slice(1));
@@ -32,10 +33,27 @@ export default function StudioReelPortfolio() {
     const track = event.currentTarget;
     const next = Math.max(0, Math.min(spreadLabels.length - 1, Math.round(track.scrollLeft / track.clientWidth)));
     setActiveSpread(next);
-    navigate(`/?version=04${spreadHashes[next] ? `#${spreadHashes[next]}` : ""}`, { replace: true });
+
+    if (settleTimerRef.current !== null) window.clearTimeout(settleTimerRef.current);
+    settleTimerRef.current = window.setTimeout(() => {
+      const settledIndex = Math.max(0, Math.min(spreadLabels.length - 1, Math.round(track.scrollLeft / track.clientWidth)));
+      const target = track.children.item(settledIndex) as HTMLElement | null;
+      if (!target) return;
+
+      positioningRef.current = true;
+      track.scrollTo({ left: target.offsetLeft, behavior: "smooth" });
+      setActiveSpread(settledIndex);
+      navigate(`/?version=04${spreadHashes[settledIndex] ? `#${spreadHashes[settledIndex]}` : ""}`, { replace: true });
+      window.setTimeout(() => { positioningRef.current = false; }, 250);
+    }, 120);
   };
 
+  useEffect(() => () => {
+    if (settleTimerRef.current !== null) window.clearTimeout(settleTimerRef.current);
+  }, []);
+
   useLayoutEffect(() => {
+    if (settleTimerRef.current !== null) window.clearTimeout(settleTimerRef.current);
     positioningRef.current = true;
     const next = spreadHashes.indexOf(location.hash.slice(1));
     const index = next < 0 ? 0 : next;
