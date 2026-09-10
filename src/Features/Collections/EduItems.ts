@@ -11,6 +11,6 @@ export const eduItems: EducationItem[] = [
     school: "Arizona State University",
     major: "BS, Accountancy",
     years: "2009–2015",
-    minor: "Minor: Chinese Language",
+    minor: "Minor: Asian Languages - Chinese",
   },
 ];

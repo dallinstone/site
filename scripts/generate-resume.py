@@ -50,8 +50,8 @@ NAME = style(
 ROLE = style(
     "Role",
     fontName="Helvetica-Bold",
-    fontSize=10,
-    leading=13,
+    fontSize=9.5,
+    leading=12,
     textColor=GOLD,
 )
 CONTACT = style(
@@ -68,8 +68,8 @@ SECTION = style(
     fontSize=12.5,
     leading=15,
     textColor=BLUE,
-    spaceBefore=9,
-    spaceAfter=6,
+    spaceBefore=8,
+    spaceAfter=5,
     keepWithNext=True,
 )
 SUMMARY = style(
@@ -92,9 +92,9 @@ JOB_META = style(
     "JobMeta",
     fontName="Helvetica",
     fontSize=8.3,
-    leading=11,
+    leading=10.5,
     textColor=MUTED,
-    spaceAfter=3,
+    spaceAfter=2.5,
     keepWithNext=True,
 )
 BODY = style(
@@ -107,13 +107,13 @@ BODY = style(
 BULLET = style(
     "Bullet",
     fontName="Helvetica",
-    fontSize=8.65,
-    leading=11.4,
+    fontSize=8.35,
+    leading=10.4,
     leftIndent=10,
     firstLineIndent=-7,
     bulletIndent=0,
     textColor=INK,
-    spaceAfter=2.4,
+    spaceAfter=1.6,
 )
 SMALL = style(
     "Small",
@@ -156,7 +156,7 @@ class ResumeDocTemplate(BaseDocTemplate):
             leftMargin=0.58 * inch,
             rightMargin=0.58 * inch,
             topMargin=1.56 * inch,
-            bottomMargin=0.5 * inch,
+            bottomMargin=0.68 * inch,
             title='Dallin "Danny" Stone - Senior Software Engineer',
             author='Dallin "Danny" Stone',
             subject="Professional resume",
@@ -186,7 +186,7 @@ def draw_page(canvas, doc):
     header = Table(
         [
             [
-                [Paragraph('Dallin "Danny" Stone', NAME), Paragraph("Senior Software Engineer", ROLE)],
+                [Paragraph('Dallin "Danny" Stone', NAME), Paragraph("Senior Software Engineer at PrismHR", ROLE)],
                 Paragraph(
                     '<link href="mailto:danny@dallinstone.com" color="#FFFCF6">danny@dallinstone.com</link><br/>'
                     "602-316-9476 | Richland, WA<br/>"
@@ -229,7 +229,7 @@ def build_resume():
     story = [
         section("Profile"),
         Paragraph(
-            "Senior software engineer with more than a decade of experience building, modernizing, and supporting data-heavy business software. I work across C#/.NET applications, SQL Server, React and Angular interfaces, Azure integrations, and the conversations that turn unclear needs into reliable systems.",
+            "Senior software engineer and technical leader with more than a decade of experience building, modernizing, and supporting data-heavy business software. I lead teams and work across C# 14/.NET 10 applications, SQL Server 2012+, React and Angular interfaces, Azure integrations, and the requirements that turn business needs into reliable systems.",
             SUMMARY,
         ),
         section("Core expertise"),
@@ -238,9 +238,9 @@ def build_resume():
     expertise = Table(
         [
             [
-                [Paragraph("DATABASE ENGINEERING", SMALL_HEADING), Paragraph("SQL Server, stored procedures, index and query tuning, Dapper, Entity Framework Core", SMALL)],
-                [Paragraph("APPLICATION SYSTEMS", SMALL_HEADING), Paragraph("C#, .NET, ASP.NET, REST APIs, React, Angular, TypeScript, identity and SSO", SMALL)],
-                [Paragraph("DELIVERY & COMMUNICATION", SMALL_HEADING), Paragraph("Requirements discovery, customer communication, technical translation, mentoring, production support", SMALL)],
+                [Paragraph("DATABASE ENGINEERING", SMALL_HEADING), Paragraph("SQL Server 2012+, database design, stored procedures, triggers, views, index and query tuning, Dapper, Entity Framework Core", SMALL)],
+                [Paragraph("APPLICATION SYSTEMS", SMALL_HEADING), Paragraph("C# 14, .NET 10, .NET Framework, ASP.NET, REST APIs, React, Angular, TypeScript, identity and SSO", SMALL)],
+                [Paragraph("TECHNICAL LEADERSHIP", SMALL_HEADING), Paragraph("People management, requirements gathering, project planning, stakeholder communication, mentoring, interviewing", SMALL)],
             ]
         ],
         colWidths=[2.39 * inch, 2.39 * inch, 2.39 * inch],
@@ -265,21 +265,21 @@ def build_resume():
             "PrismHR",
             "Senior Software Engineer",
             "September 2023 - Present",
-            "Multi-tenant human capital management software",
+            "Multi-tenant Talent Management and Workforce Management applications and integrations with PrismHR HCM and PEO Core",
             [
-                "Build features and resolve production defects in layered C#/.NET applications spanning contract, repository, provider, and API controller layers.",
-                "Develop integrations between PrismHR Talent Management and other PrismHR applications using Azure Service Bus.",
-                "Design and optimize SQL Server queries, stored procedures, indexes, tables, and functions using Dapper and Entity Framework Core, including major data-cleanup efforts.",
-                "Led the integration of Talent Management onboarding with PrismOne ID single sign-on and contributed to secure identity-server configuration and authorization scopes.",
+                "Build features and resolve defects in multi-tenant PrismHR Talent Management using C# 14 and .NET 10 with layered contract, repository, provider, and API controller architecture.",
+                "Design SQL Server queries, stored procedures, tables, functions, and indexes using Dapper and Entity Framework Core, including query optimization, refactoring, and major data cleanup.",
+                "Led the integration of Talent Management onboarding with PrismOne ID single sign-on.",
+                "Configure Duende IdentityServer clients and scopes for secure authentication and authorization.",
+                "Engineer integrations connecting Workforce Management with HCM, Talent Management with HCM, and Talent Management with PrismHR PEO Core using Azure Service Bus, Azure Functions, RabbitMQ, and C# webhooks.",
                 "Test application behavior with xUnit, Moq, NSubstitute, Bruno API collections, and Playwright browser automation.",
                 "Use Azure DevOps and Jira for backlog refinement, estimation, sprint planning, and delivery tracking.",
+                "Use GitHub Copilot, Claude Code, and ChatGPT Codex with prompt engineering, agents, hooks, skills, and task-based workflows to accelerate development and improve delivery.",
                 "Deliver Angular and TypeScript bug fixes and focused interface improvements alongside backend work.",
-                "Build Talent Management and Workforce Management features while meeting strict security and privacy requirements for sensitive HCM data.",
+                "Build Talent Management and Workforce Management features under strict PII information-security requirements for sensitive HCM data.",
                 "Collaborate with enterprise architects and technical leads to align features with established SDLC and architecture standards.",
-                "Engineer event-driven integrations that synchronize employee changes and timesheet data across HCM and workforce-management products using Azure Service Bus, Azure Functions, RabbitMQ, and C# webhooks.",
-                "Help modernize legacy workforce-management services from .NET Framework 4 to .NET 8 using dependency injection and contemporary data-access patterns.",
+                "Help modernize legacy Workforce Management projects from .NET Framework 4 to .NET 8 using Entity Framework Core, dependency injection, and contemporary data-access patterns.",
                 "Apply factory, unit-of-work, and repository patterns to keep services testable and maintainable across legacy and modernized codebases.",
-                "Configure Duende IdentityServer clients and scopes to support secure authentication and authorization across the platform.",
             ],
         )
     )
@@ -288,20 +288,20 @@ def build_resume():
     story.append(
         job(
             "American Airlines",
-            "Senior Web Developer/Team Lead",
+            "Senior Web Developer / Team Lead",
             "September 2017 - September 2023",
             "Enterprise recruiting, union, and operations applications",
             [
-                "Served as team lead and lead developer for a high-priority, greenfield applicant-tracking system built with React, ASP.NET, and SQL Server, from initial design through production deployment.",
-                "Provided day-to-day direction to software engineers, assigned work, communicated project status, and mentored team members through one-on-ones and feedback.",
-                "Established team objectives and tracked delivery indicators such as sprint throughput and deployment frequency.",
-                "Partnered with project managers and business stakeholders to shape release plans and make project-level technical decisions.",
-                "Created, maintained, and tested disaster-recovery and business-continuity plans that were successfully executed during three live business-critical events.",
-                "Guided updates to union websites required by a new joint collective bargaining agreement while protecting sensitive employee data.",
-                "Led the migration of three legacy web applications from on-premises infrastructure to Azure App Service, SQL Managed Instance, and Azure Data Factory.",
-                "Secured API authentication and authorization flows using PingFederate and JWT tokens.",
-                "Conducted more than 30 technical interviews and helped make hiring decisions for eight developers.",
-                "Designed and maintained SQL Server databases, stored procedures, triggers, and views that automated critical workflows, including randomized employee selection for drug and alcohol testing.",
+                "Served as team lead and lead developer for a high-priority, greenfield applicant-tracking system built with React, ASP.NET, and SQL Server, from initial design through production deployment; assigned work and reported status to senior leadership.",
+                "Managed software engineers through regular one-on-ones, performance reviews, and ongoing mentorship.",
+                "Set team objectives and tracked KPIs including story points per sprint and deployments per week.",
+                "Partnered with project managers and business stakeholders on long-term tactical plans and strategic feature-rollout decisions.",
+                "Created and rigorously tested disaster-recovery and business-continuity plans used during three live business-critical events to maximize uptime.",
+                "Led CWA/IBT and TWU union-site development under strict PII-security requirements for sensitive user data and new collective bargaining agreements.",
+                "Migrated three legacy applications to Azure App Service, SQL Managed Instance, and Azure Data Factory.",
+                "Managed API authentication and authorization with PingFederate and JWT tokens.",
+                "Conducted more than 30 technical interviews and made final hiring decisions for eight developers, scaling the team to meet organizational priorities.",
+                "Designed and maintained SQL Server 2016 databases, stored procedures, triggers, and views, including the American Airlines drug-and-alcohol-testing random-selection program.",
                 "Supported production applications built with C#, VB.NET, Blazor, Web Forms, and MVC on the Employee Shared Technology team.",
             ],
         )
@@ -315,11 +315,11 @@ def build_resume():
                 "October 2015 - September 2017",
                 "ERP implementation, SQL reporting, production support, and people leadership",
                 [
-                    "Built and managed a seven-person team supporting fourteen production clients; established one-on-ones, team meetings, and service KPIs.",
-                    "Wrote and maintained SQL reports for SAP Business One clients, translating business and support requirements into reusable reporting outputs.",
-                    "Created a revenue-recognition module for SAP Business One to support deferred-revenue analysis for multimillion-dollar organizations.",
-                    "Partnered with the implementation team on SAP Business One configuration, user training, and feature development.",
-                    "Established repeatable support practices that made case ownership and service performance easier to track across the client portfolio.",
+                    "Built and managed a seven-person technical-support team serving fourteen enterprise clients; set departmental objectives and used one-on-ones, performance metrics, and KPIs to drive improvement.",
+                    "Created hundreds of SQL reports and views that streamlined business processes and supported client transitions to new ERP software.",
+                    "Architected a SAP Business One revenue-recognition module using SQL stored procedures to analyze deferred revenue for multi-million-dollar corporations.",
+                    "Partnered with the SAP Business One implementation team on system configuration, feature creation, and end-user training.",
+                    "Established repeatable support practices that improved case ownership and service visibility across the client portfolio.",
                 ],
             ),
             section("Education"),
@@ -330,7 +330,7 @@ def build_resume():
         [
             [
                 [Paragraph("Boston University", SMALL_HEADING), Paragraph("MS, Computer Information Systems", BODY), Paragraph("Data Analytics emphasis | 2017-2019", SMALL)],
-                [Paragraph("Arizona State University", SMALL_HEADING), Paragraph("BS, Accountancy", BODY), Paragraph("Chinese Language minor | 2009-2015", SMALL)],
+                [Paragraph("Arizona State University", SMALL_HEADING), Paragraph("BS, Accountancy", BODY), Paragraph("Minor: Asian Languages - Chinese | 2009-2015", SMALL)],
             ]
         ],
         colWidths=[3.59 * inch, 3.59 * inch],
@@ -354,10 +354,11 @@ def build_resume():
 
     toolkit = Table(
         [
-            [Paragraph("LANGUAGES & FRAMEWORKS", SMALL_HEADING), Paragraph("C#, .NET, ASP.NET, React, Angular, TypeScript", SMALL)],
-            [Paragraph("DATA", SMALL_HEADING), Paragraph("SQL Server, stored procedures, query plans, indexes, Dapper, Entity Framework Core", SMALL)],
-            [Paragraph("CLOUD & INTEGRATION", SMALL_HEADING), Paragraph("Microsoft Azure, Azure Functions, Azure Service Bus, Azure Data Factory, RabbitMQ, REST APIs, webhooks", SMALL)],
-            [Paragraph("QUALITY & DELIVERY", SMALL_HEADING), Paragraph("xUnit, Moq, NSubstitute, Playwright, Bruno, Git, Azure DevOps, Jira, SDLC", SMALL)],
+            [Paragraph("LANGUAGES & FRAMEWORKS", SMALL_HEADING), Paragraph("C# 14, .NET 10, .NET Framework, ASP.NET, React, Angular, TypeScript", SMALL)],
+            [Paragraph("DATA", SMALL_HEADING), Paragraph("SQL Server 2012+, database design, stored procedures, query plans, indexes, Dapper, Entity Framework Core", SMALL)],
+            [Paragraph("CLOUD & INTEGRATION", SMALL_HEADING), Paragraph("Azure App Service, Azure Functions, Azure Service Bus, Azure Data Factory, RabbitMQ, REST APIs, webhooks", SMALL)],
+            [Paragraph("LEADERSHIP & DELIVERY", SMALL_HEADING), Paragraph("People management, requirements gathering, project planning, mentoring, interviewing, PII security, disaster recovery, SDLC governance", SMALL)],
+            [Paragraph("QUALITY & AI", SMALL_HEADING), Paragraph("xUnit, Moq, NSubstitute, Playwright, Bruno, GitHub Copilot, Claude Code, ChatGPT Codex", SMALL)],
         ],
         colWidths=[1.7 * inch, 5.48 * inch],
     )
